@@ -99,7 +99,7 @@
                             <div class="add"><a href="${pageContext.request.contextPath}/item/add"><img src="/icons/add.png" width=40px height=40px></a></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="mypage"><a href="${pageContext.request.contextPath}/member/myPage"><img src="/icons/mypage.png" width=60px height=60px></a></div>&nbsp;&nbsp;&nbsp;
 							<div class="shipping"><a href="${pageContext.request.contextPath}/order/myList/${loginMember.id}"><img src="/icons/shipping.png" width=80px height=80px></a></div>&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="wish"><a href="${pageContext.request.contextPath}/like/list"><img src="/icons/wish.png" width=60px height=60px></a></div>
+							<div class="wish"><a href="${pageContext.request.contextPath}/wish/list"><img src="/icons/wish.png" width=60px height=60px></a></div>
                         </div>
                     </div>
                 </div>

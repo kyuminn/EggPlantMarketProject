@@ -11,7 +11,6 @@ public class KakaoApprovalRequest {
 	// 구매자 아이디
 	private long memberId;
 	private String tid;
-	
 	//nullable
 	private String pgToken;
 	

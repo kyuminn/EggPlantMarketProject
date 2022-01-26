@@ -24,7 +24,7 @@
      	</div>
      	<div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
      		<h3>구매</h3><br>
-			<a href="${pageContext.request.contextPath}/like/list"> 찜 목록</a><br>
+			<a href="${pageContext.request.contextPath}/wish/list"> 찜 목록</a><br>
 			<a href="${pageContext.request.contextPath}/question/myList/${loginMember.id}">나의 문의</a><br>
      	</div>
      	<div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">

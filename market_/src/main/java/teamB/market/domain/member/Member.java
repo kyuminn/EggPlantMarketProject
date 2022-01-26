@@ -17,11 +17,12 @@ public class Member {
     private String nickname;
     private String pwd;
     private String phoneNum;
-    private Address addr;
+    //private Address addr;
+    private String addr;
     private String emailAuthCode; 
     private EmailAuth isEmailAuth;  
     private Role role;
-    private Access access;
+    private Route route;
     private long point;
     private float ratingAvg;
 

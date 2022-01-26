@@ -13,12 +13,12 @@
 	<jsp:include page="../common/header.jsp"/>
 </head>
 <body>
-		<c:if test="${empty myLikesItems }">
+		<c:if test="${empty myWishItems }">
 			<div class="container">
 				<h3> 찜한 상품이 없습니다</h3>
 			</div>
 		</c:if>
-		<c:if test="${!empty myLikesItems }">
+		<c:if test="${!empty myWishItems }">
 		<div class="cart-wrap">
 		<div class="container">
 	        <div class="row">
@@ -37,7 +37,7 @@
 					        	</tr>
 					        </thead>
 					        <tbody>
-					        	<c:forEach var="item" items="${myLikesItems }">
+					        	<c:forEach var="item" items="${myWishItems }">
 					        	<tr>
 					        		<td width="45%">
 					        			<div class="display-flex align-center">
@@ -55,7 +55,7 @@
 					        			<button type="button" class="round-black-btn small-btn" onclick="window.location.href='${pageContenxt.request.contextPath}/item/detail/${item.id}'">자세히 보기</button>
 					        		</td>
 					        		<td width="15%"><button class="round-black-btn small-btn"
-					        		onclick="window.location.href='${pageContext.request.contextPath}/like/remove/${item.id }'">제거</button></td>
+					        		onclick="window.location.href='${pageContext.request.contextPath}/wish/remove/${item.id }'">제거</button></td>
 					        		<td width="10%" class="text-center"><a href="#" class="trash-icon"><i class="far fa-trash-alt"></i></a></td>
 					        	</tr>
 					        	</c:forEach>

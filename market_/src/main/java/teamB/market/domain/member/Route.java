@@ -1,6 +1,6 @@
 package teamB.market.domain.member;
 
-public enum Access {
+public enum Route {
     NORMAL,
     KAKAO,
     NAVER

@@ -1,8 +1,11 @@
 package teamB.market.domain.item.repository;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import teamB.market.domain.item.Item;
 
-import java.util.List;
 
 public interface ItemRepository {
     Item save(Item item);

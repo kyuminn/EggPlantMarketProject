@@ -34,6 +34,7 @@ public class MainController {
 		if(session!=null) {
 			loginMember = memberService.findByEmail((String)session.getAttribute("loginSession"));
 		}
+
 		model.addAttribute("loginMember", loginMember);
 		return "main";
 	}

@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import teamB.market.domain.item.Item;
 import teamB.market.domain.item.repository.ItemRepository;
 
-import teamB.market.domain.like.Like;
-import teamB.market.domain.like.repository.LikeRepository;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -39,10 +37,6 @@ public class ItemServiceImpl implements ItemService {
 		return itemRepository.findById(id);
 	}
 
-//	@Override
-//	public int saveLike(Like like) {
-//		return likeRepository.save(like);
-//	}
 
 	@Override
 	public Item findByOrderKey(String orderKey) {

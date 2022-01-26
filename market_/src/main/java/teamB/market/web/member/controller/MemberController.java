@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import teamB.market.domain.member.Access;
+import teamB.market.domain.member.Route;
 import teamB.market.domain.member.Address;
 import teamB.market.domain.member.EmailAuth;
 import teamB.market.domain.member.Member;
@@ -60,7 +60,7 @@ public class MemberController {
             return "member/socialAddForm";
         }
     	
-    	// 검증되지 않은 이메일을 데이터베이스에서 어떻게 처리할지
+    	// 폼에 입력한 이메일이 데이터베이스에 존재하는데 이메일 인증이 되지 않은 경우 삭제
     	Member findMember = memberService.findByEmail(form.getEmail());
     	if(findMember!=null) {
     		if (findMember.getIsEmailAuth().equals(EmailAuth.WAIT)) {
@@ -84,25 +84,30 @@ public class MemberController {
     	Member member = new Member();
     	// 어느 소셜 경로로 들어왔는지 수정
     	if(access.equals("kakao")) {
-    		member.setAccess(Access.KAKAO);
+    		member.setRoute(Route.KAKAO);
+
     	}else if(access.equals("naver")) {
-    		member.setAccess(Access.NAVER);
+    		member.setRoute(Route.NAVER);
     	}
 
-    	Address addr = new Address();
-    	addr.setPostCode(form.getPostCode());
-    	addr.setRoadAddr(form.getRoadAddr());
-    	addr.setDetailAddr(form.getDetailAddr());
-
+//    	Address addr = new Address();
+//    	addr.setPostCode(form.getPostCode());
+//    	addr.setRoadAddr(form.getRoadAddr());
+//    	addr.setDetailAddr(form.getDetailAddr());
+    	
+    	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
     	member.setAddr(addr);
     	member.setEmail(form.getEmail());
     	member.setName(form.getName());
     	member.setNickname(form.getNickname());
-    	member.setRole(Role.BUYER);
+    	//member.setRole(Role.BUYER);
     	member.setPhoneNum(form.getPhoneNum());
+    	//소셜 회원가입의 경우 바로 이메일 인증상태 넣어주기
+    	member.setIsEmailAuth(EmailAuth.COMPLETE);
     	
-    	//소셜 멤버의 경우 임시 비밀번호 생성해서 넣어주기?
-    	member.setPwd("tmpPWD");
+    	//소셜 멤버의 경우 임시 비밀번호 생성해서 넣어주기
+    	String pwd = RandomStringUtils.randomAlphanumeric(8);
+    	member.setPwd(pwd);
     	
     	memberService.join(member);
     	System.out.println(member);
@@ -124,6 +129,14 @@ public class MemberController {
         	return "member/addForm";
         }
         
+    	// 폼에 입력한 이메일이 데이터베이스에 존재하는데 이메일 인증이 되지 않은 경우 삭제
+    	Member findMember = memberService.findByEmail(form.getEmail());
+    	if(findMember!=null) {
+    		if (findMember.getIsEmailAuth().equals(EmailAuth.WAIT)) {
+    			memberService.delete(findMember.getId());
+    		}
+    	}
+        
         // 이메일 중복 체크
         if (memberService.findByEmail(form.getEmail())!=null) {
         	bindingResult.rejectValue("email", "AlreadyExisting");
@@ -135,6 +148,7 @@ public class MemberController {
         	bindingResult.rejectValue("phoneNum", "AlreadyExisting");
         	return "member/addForm";
         }
+        
 
     	
     	// 이메일 인증 코드 생성
@@ -142,22 +156,24 @@ public class MemberController {
     	
     	Member member = new Member();
     	
-        member.setAccess(Access.NORMAL);
+        member.setRoute(Route.NORMAL);
     	member.setEmail(form.getEmail());
     	member.setIsEmailAuth(EmailAuth.WAIT);
     	member.setName(form.getName());
     	member.setNickname(form.getNickname());
     	member.setPwd(form.getPwd());
-    	member.setRole(Role.BUYER); // default 값 BUYER
+    	//member.setRole(Role.BUYER); // default 값 BUYER
     	member.setEmailAuthCode(emailAuthCode);
     	member.setPhoneNum(form.getPhoneNum());
     	
     	//주소 객체 저장
-    	Address addr = new Address();
-    	addr.setPostCode(form.getPostCode());
-    	addr.setRoadAddr(form.getRoadAddr());
-    	addr.setDetailAddr(form.getDetailAddr());
+//    	Address addr = new Address();
+//    	addr.setPostCode(form.getPostCode());
+//    	addr.setRoadAddr(form.getRoadAddr());
+//    	addr.setDetailAddr(form.getDetailAddr());
+    	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
     	member.setAddr(addr);
+
     	
     	
     	
@@ -165,7 +181,7 @@ public class MemberController {
     	memberService.join(member);
     	System.out.println(member);
     	
-    	System.out.println(member.getAddr().getRoadAddr());
+
     	
     	// 일반 회원가입의 경우 인증 이메일 전송
     	emailService.sendEmailAuthMail(form.getEmail(), emailAuthCode);
@@ -195,9 +211,13 @@ public class MemberController {
     	EditMemberForm member = new EditMemberForm();
     	member.setNickname(loginMember.getNickname());
     	member.setPhoneNum(loginMember.getPhoneNum());
-    	member.setPostCode(loginMember.getAddr().getPostCode());
-    	member.setRoadAddr(loginMember.getAddr().getRoadAddr());
-    	member.setDetailAddr(loginMember.getAddr().getDetailAddr());
+    	
+    	// 주소를 가져와서 공백을 기준으로 우편번호 도로명주소 상세주소 나누기
+    	String addr = loginMember.getAddr();
+    	String[] addrSplit = addr.split("%");
+    	member.setPostCode(addrSplit[0]);
+    	member.setRoadAddr(addrSplit[1]);
+    	member.setDetailAddr(addrSplit[2]);
     	
         // Model 에 회원객체 값 넣기
     	model.addAttribute("member", member);
@@ -241,12 +261,13 @@ public class MemberController {
         }
         
         // 성공 로직
-        Address addr = new Address();
-        addr.setPostCode(form.getPostCode());
-        addr.setRoadAddr(form.getRoadAddr());
-        addr.setDetailAddr(form.getDetailAddr());
+//        Address addr = new Address();
+//        addr.setPostCode(form.getPostCode());
+//        addr.setRoadAddr(form.getRoadAddr());
+//        addr.setDetailAddr(form.getDetailAddr());
         Member updateParam = new Member();
         
+    	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
         updateParam.setAddr(addr);
         updateParam.setPhoneNum(form.getPhoneNum());
         updateParam.setNickname(form.getNickname());

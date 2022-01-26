@@ -4,7 +4,7 @@ package teamB.market.web.member.service;
 import teamB.market.domain.member.Member;
 
 public interface MemberService {
-    Member join(Member member);
+    void join(Member member);
     void edit(long id, Member updateParam);
     Member findByEmail(String email);
     Member findByPhoneNum(String phoneNum);

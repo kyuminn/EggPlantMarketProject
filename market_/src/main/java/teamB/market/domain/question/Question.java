@@ -19,6 +19,6 @@ public class Question {
     private String title;
     private String writer;
     private String content;
-    private String date;
+    private String currentTime;
     private IsReplied isReplied;
 }

@@ -26,8 +26,8 @@ public class MemberServiceImpl implements MemberService {
     private final JavaMailSender javaMailSender;
 
     @Override
-    public Member join(Member member) {
-        return memberRepository.save(member);
+    public void join(Member member) {
+         memberRepository.save(member);
     }
 
     @Override

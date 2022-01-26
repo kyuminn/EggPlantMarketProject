@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import teamB.market.domain.member.Access;
+import teamB.market.domain.member.Route;
 import teamB.market.domain.member.Address;
 import teamB.market.domain.member.EmailAuth;
 import teamB.market.domain.member.Role;

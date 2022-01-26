@@ -80,7 +80,7 @@ public class QuestionController {
         Question question = Question.builder()
                 .isReplied(IsReplied.WAIT)
                 .content(form.getContent())
-                .date(form.getDate())
+                .currentTime(form.getDate())
                 .memberId(loginMember.getId())
                 .writer(loginMember.getNickname())
                 .title(form.getTitle())

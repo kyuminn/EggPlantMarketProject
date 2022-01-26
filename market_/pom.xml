@@ -85,9 +85,31 @@
 	
 	<!-- 서버 재시작 없이 변경사항 반영 -->
 	<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-devtools</artifactId>
-</dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-devtools</artifactId>
+	</dependency>
+	
+	<!-- mybatis -->
+	<dependency>
+		<groupId>org.mybatis.spring.boot</groupId>
+		<artifactId>mybatis-spring-boot-starter</artifactId>
+		<version>2.2.1</version>
+	</dependency>
+	
+		<!-- oracle driver -->
+	<dependency>
+		<groupId>com.oracle.database.jdbc</groupId>
+		<artifactId>ojdbc8</artifactId>
+		<scope>runtime</scope>
+	</dependency>
+	
+	<!-- jdbc 인코딩 방식 추가 -->
+	<dependency> 
+		<groupId>com.oracle.ojdbc</groupId>
+		 <artifactId>orai18n</artifactId>
+		  <version>19.3.0.0</version>
+	 </dependency>
+
 	</dependencies>
 
 	<build>

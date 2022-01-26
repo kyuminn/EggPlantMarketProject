@@ -115,7 +115,7 @@
 			location.href="/login?redirectURL=/item/detail/${item.id}";
 		}
     		$.ajax({
-    			url : '/like',
+    			url : '/wish',
     			type : 'POST',
     			data : form,
     			success :function(result){
