@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,7 +24,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,21 +32,31 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import lombok.RequiredArgsConstructor;
 import teamB.market.domain.item.Item;
+import teamB.market.domain.kakao.KakaoApprovalRequest;
+import teamB.market.domain.kakao.repository.PayApprovalRepository;
+import teamB.market.domain.member.Member;
+import teamB.market.domain.shipping.Shipping;
+import teamB.market.domain.shipping.Status;
+import teamB.market.domain.shipping.repository.ShippingRepository;
 import teamB.market.web.item.service.ItemService;
 import teamB.market.web.member.form.SocialAddMemberForm;
 import teamB.market.web.member.service.MemberService;
+import teamB.market.web.socialAPI.kakao.approval.ApprovalResponse;
 
 
 
 
 @Controller
+@RequiredArgsConstructor
 public class KakaoController {
 	
-	@Autowired
-	private MemberService memberService;
-	@Autowired
-	private ItemService itemService;
+
+	private final MemberService memberService;
+	private final ItemService itemService;
+	private final PayApprovalRepository payApprovalRepository;
+	private final ShippingRepository shippingRepository;
 	
 	//카카오 로그인
 	@GetMapping("/myapp/loginCallBack")
@@ -186,7 +194,7 @@ public class KakaoController {
 	        param.add("quantity", "1"); //1로 고정
 	        param.add("total_amount", String.valueOf(item.getPrice()));
 	        param.add("tax_free_amount", "0");
-	        param.add("approval_url", "http://localhost:8080/kakao/approval");
+	        param.add("approval_url", "http://localhost:8080/kakao/approval/"+itemId);
 	        param.add("cancel_url", "http://localhost:8080/kakao/cancel");
 	        param.add("fail_url", "http://localhost:8080/kakao/fail");
 	        
@@ -210,6 +218,18 @@ public class KakaoController {
 	        	e.printStackTrace();
 	        }
 	        String pcURL = kakaoPay.getNext_redirect_pc_url();
+	        String tid = kakaoPay.getTid();
+	        
+	        //구매자 아이디 조회
+	        String buyerEmail = (String)session.getAttribute("loginSession");
+	        Long memberId= memberService.findByEmail(buyerEmail).getId();
+	        
+	        KakaoApprovalRequest request = new KakaoApprovalRequest();
+	        request.setItemId(itemId);
+	        request.setMemberId(memberId);
+	        request.setTid(tid);
+	        // token은 나중에 넣어주기
+	        payApprovalRepository.save(request);
 	        
 	        // 성공, 실패, 취소 url 설정
 	        // 카카오페이 API 문서 참고
@@ -218,9 +238,61 @@ public class KakaoController {
 	        return "redirect:" + pcURL;
 	    }
 	    
-	    @GetMapping("/kakao/approval")
-	    public String kakaoPay(String pg_token,Model model) {
-	    	model.addAttribute("pg_token", pg_token);
-	    	return "approval";
+	    @GetMapping("/kakao/approval/{id}")
+	    public String kakaoPay(String pg_token,@PathVariable("id")Long itemId,HttpSession session,Model model) {
+	    	// orderKey 가져오기
+	    	Item item = itemService.findById(itemId);
+	    	String orderKey= item.getOrderKey();
+	    	
+	    	KakaoApprovalRequest request=payApprovalRepository.findByItemId(itemId);
+	    	request.setPgToken(pg_token);
+	    	
+	    	//RestTemplate: REST API를 사용하여 HTTP 통신을 할 수 있게 해줌
+	        RestTemplate restTemplate = new RestTemplate();
+	        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+	        // HttpHeaders Object 
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.add("Authorization", "KakaoAK 2a2a86ab386b29f21410d0a4f53b6615");
+	        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	    	
+	        //HttpBody Object 생성
+	        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+	        param.add("cid", "TC0ONETIME"); // 테스트용 가맹점 코드 (카카에 디벨로퍼에서 제공)
+	        param.add("tid", request.getTid());
+	        param.add("partner_order_id", orderKey);
+	        param.add("partner_user_id",(String)session.getAttribute("loginSession"));
+	        param.add("pg_token", pg_token);
+	        
+	      //HttpEntitiy Object에 header와 body 넣어서 request 전송
+	        HttpEntity<MultiValueMap<String, String>> kakaoPayRequest = new HttpEntity<>(param, headers);
+	        
+	        // exchange(요청 url, 전송 method, request, response return type)
+	        ResponseEntity<String> kakaoPayResponse = restTemplate.exchange
+	        		("https://kapi.kakao.com/v1/payment/approve",
+	        				HttpMethod.POST,
+	        				kakaoPayRequest,
+	        				String.class);
+	        
+	        // json 방식으로 받아온 response data를 생성해둔 객체에 매핑
+	        ObjectMapper mapper = new ObjectMapper();
+	        ApprovalResponse response = null;
+	        
+	        try {
+	        	response = mapper.readValue(kakaoPayResponse.getBody(), ApprovalResponse.class );
+	        }catch(JsonProcessingException e) {
+	        	e.printStackTrace();
+	        }
+	        
+	        // 결제 완료 시 상태 변경
+	    	Shipping shipping=shippingRepository.findByItemId(item.getId());
+	    	shipping.setShippingStatus(Status.READY);
+	    	// 구매자 아이디 넣어주기
+	    	Member buyer = memberService.findByEmail(response.getPartner_user_id());
+	    	shipping.setMemberId(buyer.getId());
+	    	
+	    	model.addAttribute("memberId", buyer.getId());
+	    	System.out.println("responseBody:"+kakaoPayResponse.getBody());
+	    	
+	    	return "order/success";
 	    }
 }

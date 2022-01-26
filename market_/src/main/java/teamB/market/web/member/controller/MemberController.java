@@ -272,7 +272,15 @@ public class MemberController {
     @GetMapping("/myPoint/{id}")
     public String viewMyPoint(@PathVariable("id")Long memberId,Model model) {
     	Member member = memberService.findById(memberId);
-    	model.addAttribute("member", member);
+    	model.addAttribute("loginMember", member);
     	return "member/myPoint";
+    }
+    
+    @PostMapping("/convertPoint/{id}")
+    public String convertMyPoint(@PathVariable("id")Long memberId) {
+    	Member member = memberService.findById(memberId);
+    	// 멤버의 포인트 0으로 초기화
+    	member.setPoint(0);
+    	return "redirect:/member/myPoint/"+memberId;
     }
 }

@@ -60,7 +60,7 @@
                     <label for="inputName" class="col-lg-2 control-label">이름</label>
                     <div class="col-lg-5">                
                         <!-- <input type="text" class="form-control onlyHangul" name="name" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15"> -->
-                        <form:input path="name" class="form-control onlyHangul" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15"/>
+                        <form:input path="name" class="form-control onlyHangul" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15" required="required"/>
                         <form:errors path="name"/>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-5">
                         <!-- <input type="text" class="form-control" name="email" id="email" data-rule-required="true"> -->
-                        <form:input path="email" class="form-control" id="email" data-rule-required="true"/>
+                        <form:input path="email" class="form-control" id="email" data-rule-required="true" required="required"/>
                         <form:errors path="email"/>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     <label for="inputNickname" class="col-lg-2 control-label">별명</label>
                     <div class="col-lg-5">
                         <!-- <input type="text" class="form-control" name="nickname" id="nickname" data-rule-required="true" placeholder="별명" maxlength="15"> -->
-                        <form:input path="nickname" class="form-control" id="nickname" data-rule-required="true" placeholder="별명" maxlength="15"/>
+                        <form:input path="nickname" class="form-control" id="nickname" data-rule-required="true" placeholder="별명" maxlength="15" required="required"/>
                     	<form:errors path="nickname"/>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <div class="col-lg-5">
                         
                         <!-- <input type="password" class="form-control" id="password" name="pwd" data-rule-required="true" placeholder="패스워드" maxlength="30"> -->
-                    	<form:password path="pwd" class="form-control" id="password"  data-rule-required="true" placeholder="패스워드" maxlength="30"/>
+                    	<form:password path="pwd" class="form-control" id="password"  data-rule-required="true" placeholder="패스워드" maxlength="30" required="required"/>
                     	<form:errors path="pwd"/>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                     <label for="inputPasswordCheck" class="col-lg-2 control-label">패스워드 확인</label>
                     <div class="col-lg-5">
                         <!--  <input type="password" class="form-control" id="passwordCheck" name="confirmPwd" data-rule-required="true" placeholder="패스워드 확인" maxlength="30">-->
-                    	<form:password path="confirmPwd" class="form-control" id="passwordCheck" data-rule-required="true" placeholder="패스워드 확인" maxlength="30"/>
+                    	<form:password path="confirmPwd" class="form-control" id="passwordCheck" data-rule-required="true" placeholder="패스워드 확인" maxlength="30" required="required"/>
                     	<form:errors path="confirmPwd"/>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <div class="col-lg-5">
                     
                         <!--  <input type="tel" class="form-control onlyNumber" id="phoneNumber" name="phoneNum" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">-->
-                    	<form:input path="phoneNum" class="form-control onlyNumber" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11"/>
+                    	<form:input path="phoneNum" class="form-control onlyNumber" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11" required="required"/>
                     	<form:errors path="phoneNum"/>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                     <div class="col-lg-5">
                     	<form:input path="postCode" class="form-control"/>
                         <!-- <input type="text" class="form-control" name="postCode" id="postCode"> -->
-                        <input type="button" class="btn btn-secondary btn-sm" onClick="execDaumPostcode()" value="우편번호 검색">
+                        <input type="button" class="btn btn-secondary btn-sm" onClick="execDaumPostcode()" value="우편번호 검색" required="required">
                         <form:errors path="postCode"/>
                     </div>
                 </div>
@@ -124,14 +124,14 @@
                 <div class="form-group">
                     <label for="roadAddr" class="col-lg-2 control-label">도로명 주소</label>
                     <div class="col-lg-5">
-                        <form:input path="roadAddr" class="form-control"/>&nbsp;
+                        <form:input path="roadAddr" class="form-control" required="required"/>&nbsp;
                         <form:errors path="roadAddr"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="detailAddr" class="col-lg-2 control-label">상세 주소</label>
                     <div class="col-lg-10">
-                        <form:input path="detailAddr" class="form-control"/>&nbsp;
+                        <form:input path="detailAddr" class="form-control" required="required"/>&nbsp;
                         <form:errors path="detailAddr"/>
                     </div>
                 </div>

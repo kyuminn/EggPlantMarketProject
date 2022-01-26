@@ -115,7 +115,7 @@ public class QuestionController {
 
         model.addAttribute("questionList", questionList);
 
-        return "question/list";
+        return "question/myList";
     }
 
     @GetMapping("/detail/{questionId}")

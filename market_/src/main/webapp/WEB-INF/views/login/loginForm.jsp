@@ -21,7 +21,7 @@
             <div class="account-wall">
                 <img class="profile-img" src="/images/eggPlant.png">
                 <form:form class="form-signin" modelAttribute="loginFormData" action="" method="post">
-                	<form:input path="email" class="form-control" placeholder="Email"/>
+                	<form:input path="email" class="form-control" placeholder="Email" required="required"/>
                 	<input type="password" name="password" class="form-control" placeholder="Password" required>
                 	<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button><br>
                 	<form:errors/><br>
