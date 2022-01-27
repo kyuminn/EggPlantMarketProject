@@ -29,7 +29,7 @@ import teamB.market.domain.rate.Rate;
 import teamB.market.domain.rate.repository.RateRepository;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
-import teamB.market.domain.shipping.repository.ShippingRepository;
+import teamB.market.domain.shipping.mapper.ShippingMapper;
 import teamB.market.web.item.form.AddItemForm;
 import teamB.market.web.item.form.EditItemForm;
 import teamB.market.web.item.service.ItemService;
@@ -47,7 +47,7 @@ public class ItemController {
 	private final ItemService itemService;
 	private final MemberService memberService;
 	private final S3Service s3Service;
-	private final ShippingRepository shippingRepository;
+	private final ShippingMapper shippingMapper;
 	private final RateRepository rateRepository;
 	
     @GetMapping("/list")
@@ -76,7 +76,7 @@ public class ItemController {
     		
     	for (int i=0; i<ls.size();i++) {
     		Item item = ls.get(i);
-    		Status shippingStatus = shippingRepository.findByItemId(item.getId()).getShippingStatus();
+    		Status shippingStatus = shippingMapper.findByItemId(item.getId()).getShippingStatus();
     		if (shippingStatus.equals(Status.ONSALE)) {
     			onSaleItemList.add(item);
     		}else if(shippingStatus.equals(Status.READY)) {
@@ -223,9 +223,6 @@ public class ItemController {
         // 아이템 등록 시 주문번호 생성해서 넣어줌
         String orderId = form.getCategory()+RandomStringUtils.randomAlphanumeric(10);
         item.setOrderKey(orderId);
-        
-        itemService.save(item);
-        
 
         //파일 aws s3 에 업로드
         String storedFilePath = null;
@@ -238,15 +235,16 @@ public class ItemController {
         // 메인에서 아이템 객체의 썸네일 가져오기 위해 item 객체에 썸네일 경로 저장
         item.setFilePath(storedFilePath);
         
-
+        //저장
+        itemService.save(item);
 
         // 아이템 추가 시 shipping 객체에 배송상태 저장
         Shipping shipping = new Shipping();
         shipping.setShippingStatus(Status.ONSALE);
-        //구매자에 대한 아이디 이므로 지금 추가한 멤버 아이디 넣으면 안됌
-//        shipping.setMemberId(memberId);
-        shipping.setItemId(item.getId());
-        shippingRepository.save(shipping);
+
+        // 구매자 아이디(memberId)는 결제완료시 넣어주기
+        shipping.setItemId(itemService.findByOrderKey(orderId).getId());
+        shippingMapper.save(shipping);
         
         return "redirect:/item/myList/"+memberId;
     }

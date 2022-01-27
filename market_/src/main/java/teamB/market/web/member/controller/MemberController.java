@@ -1,7 +1,5 @@
 package teamB.market.web.member.controller;
 
-import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,14 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import teamB.market.domain.member.Route;
-import teamB.market.domain.member.Address;
 import teamB.market.domain.member.EmailAuth;
 import teamB.market.domain.member.Member;
-import teamB.market.domain.member.Role;
+import teamB.market.domain.member.Route;
 import teamB.market.web.mail.MailService;
 import teamB.market.web.member.form.AddMemberForm;
 import teamB.market.web.member.form.EditMemberForm;
@@ -39,8 +36,7 @@ public class MemberController {
 
     private final MemberService memberService;
 	private final MailService emailService;
-//	@Autowired
-//    private final MemberRepository memberRepository;
+
 
     @GetMapping("/add")
     public String addForm(Model model){
@@ -49,11 +45,12 @@ public class MemberController {
     }
     
     //소셜 회원가입
-    
     // 어떤 소셜 경로로 들어왔는지 @RequestParam으로 받는것을... 고려해보기!
     @PostMapping("/socialAdd")
+    @ResponseBody
     public String socialAdd(@Validated @ModelAttribute("member") SocialAddMemberForm form, BindingResult bindingResult,Model model,
     		@RequestParam(required=false)String access) {
+    	
     	//@NotBlank와 같이 validation 라이브러리가 제공하는 유효성 검사
     	if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
@@ -95,6 +92,7 @@ public class MemberController {
 //    	addr.setRoadAddr(form.getRoadAddr());
 //    	addr.setDetailAddr(form.getDetailAddr());
     	
+    	//DB varchar2 type과 맞춰서 String 값 넣어주기
     	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
     	member.setAddr(addr);
     	member.setEmail(form.getEmail());
@@ -111,7 +109,11 @@ public class MemberController {
     	
     	memberService.join(member);
     	System.out.println(member);
-    	return "redirect:/login";
+    	
+        // 회원가입 완료 alert 
+        String alertMsg = "<script>alert('회원가입 완료!');location.href='/login';</script>";        
+        return alertMsg;
+    	//return "redirect:/login";
     }
     
     //일반 회원가입
@@ -224,7 +226,8 @@ public class MemberController {
     	model.addAttribute("id", id);
         return "member/editForm";
     }
-
+    
+    @ResponseBody
     @PostMapping("/edit/{id}")
     public String edit(@Validated @ModelAttribute("member") EditMemberForm form, BindingResult bindingResult,
     		@RequestParam("currentPhoneNum")String currentPhoneNum,@PathVariable("id")long id){
@@ -274,9 +277,10 @@ public class MemberController {
         updateParam.setPwd(form.getChangePwd());
         
         memberService.updateMemberInfo(id, updateParam);
-        
-
-        return "redirect:/member/edit/"+id;
+        // 수정 완료 alert 
+        String alertMsg = "<script>alert('회원정보가 변경되었습니다!');history.go(-1);</script>";        
+        //return "redirect:/member/edit/"+id;
+        return alertMsg;
     }
     
     @GetMapping("/myPage")

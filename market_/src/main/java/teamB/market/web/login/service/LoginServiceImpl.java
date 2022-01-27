@@ -1,24 +1,23 @@
 package teamB.market.web.login.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import teamB.market.domain.member.EmailAuth;
 import teamB.market.domain.member.Member;
-import teamB.market.domain.member.repository.MemberRepository;
+import teamB.market.domain.member.mapper.MemberMapper;
 
 @Service
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService{
 	
-    private final MemberRepository memberRepository;
+	private final MemberMapper memberMapper;
 
     @Override
     public Member login(String email, String password) {
     	Member member = null;
-    	if (memberRepository.findByEmail(email).getPwd().equals(password)) {
-    		member = memberRepository.findByEmail(email);
+    	if (memberMapper.findByEmail(email).getPwd().equals(password)) {
+    		member = memberMapper.findByEmail(email);
     	}
         return member;
     }
@@ -26,7 +25,7 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public boolean isAuthorizedEmail(String email) {
 		boolean isAuthorized = false;
-		if (memberRepository.findByEmail(email).getIsEmailAuth().equals(EmailAuth.COMPLETE)) {
+		if (memberMapper.findByEmail(email).getIsEmailAuth().equals(EmailAuth.COMPLETE)) {
 			isAuthorized = true;
 		}
 		return isAuthorized;
@@ -35,8 +34,8 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public String findUserEmail(String name, String phoneNum) {
 		String userEmail=null;
-		if (memberRepository.findByPhoneNum(phoneNum).getName().equals(name)) {
-			userEmail = memberRepository.findByPhoneNum(phoneNum).getEmail();
+		if (memberMapper.findByPhoneNum(phoneNum).getName().equals(name)) {
+			userEmail = memberMapper.findByPhoneNum(phoneNum).getEmail();
 		}
 		return userEmail;
 	}
@@ -44,7 +43,7 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public boolean isMemberExists(String email) {
 		boolean exist = false;
-		if(memberRepository.findByEmail(email)!=null) {
+		if(memberMapper.findByEmail(email)!=null) {
 			exist= true;
 		}
 		return exist;

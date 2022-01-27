@@ -6,7 +6,7 @@ import teamB.market.domain.item.Item;
 
 
 public interface ItemService {
-	Item save(Item item);
+	void save(Item item);
 	Item findByMemberId(long memberId);
 	List<Item> findAll();
 	Item findById(long id);

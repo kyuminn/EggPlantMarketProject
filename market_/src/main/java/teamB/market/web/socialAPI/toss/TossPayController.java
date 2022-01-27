@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 import teamB.market.domain.item.Item;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
-import teamB.market.domain.shipping.repository.ShippingRepository;
+import teamB.market.domain.shipping.mapper.ShippingMapper;
 import teamB.market.web.item.service.ItemService;
 import teamB.market.web.member.service.MemberService;
 
@@ -35,7 +35,7 @@ import teamB.market.web.member.service.MemberService;
 @RequiredArgsConstructor
 public class TossPayController {
 
-	private final ShippingRepository shippingRepository;
+	private final ShippingMapper shippingMapper;
 	private final ItemService itemService;
 	private final MemberService memberService;
 	
@@ -68,7 +68,7 @@ public class TossPayController {
     	
     	// 결제 완료 시 상태 변경
     	Item item = itemService.findByOrderKey(orderId);
-    	Shipping shipping=shippingRepository.findByItemId(item.getId());
+    	Shipping shipping=shippingMapper.findByItemId(item.getId());
     	shipping.setShippingStatus(Status.READY);
     	
     	// 이때 구매자 아이디 넣어주기

@@ -35,11 +35,11 @@ import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import teamB.market.domain.item.Item;
 import teamB.market.domain.kakao.KakaoApprovalRequest;
-import teamB.market.domain.kakao.repository.PayApprovalRepository;
+import teamB.market.domain.kakao.mapper.KakaoPayMapper;
 import teamB.market.domain.member.Member;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
-import teamB.market.domain.shipping.repository.ShippingRepository;
+import teamB.market.domain.shipping.mapper.ShippingMapper;
 import teamB.market.web.item.service.ItemService;
 import teamB.market.web.member.form.SocialAddMemberForm;
 import teamB.market.web.member.service.MemberService;
@@ -55,8 +55,8 @@ public class KakaoController {
 
 	private final MemberService memberService;
 	private final ItemService itemService;
-	private final PayApprovalRepository payApprovalRepository;
-	private final ShippingRepository shippingRepository;
+	private final KakaoPayMapper kakaoPayMapper;
+	private final ShippingMapper shippingMapper;
 	
 	//카카오 로그인
 	@GetMapping("/myapp/loginCallBack")
@@ -229,7 +229,7 @@ public class KakaoController {
 	        request.setMemberId(memberId);
 	        request.setTid(tid);
 	        // token은 나중에 넣어주기
-	        payApprovalRepository.save(request);
+	        kakaoPayMapper.save(request);
 	        
 	        // 성공, 실패, 취소 url 설정
 	        // 카카오페이 API 문서 참고
@@ -238,14 +238,16 @@ public class KakaoController {
 	        return "redirect:" + pcURL;
 	    }
 	    
+	    //카카오페이 결제 승인
 	    @GetMapping("/kakao/approval/{id}")
 	    public String kakaoPay(String pg_token,@PathVariable("id")Long itemId,HttpSession session,Model model) {
 	    	// orderKey 가져오기
 	    	Item item = itemService.findById(itemId);
 	    	String orderKey= item.getOrderKey();
 	    	
-	    	KakaoApprovalRequest request=payApprovalRepository.findByItemId(itemId);
-	    	request.setPgToken(pg_token);
+	    	//여기서 pgToken 넣어주기
+	    	KakaoApprovalRequest request=kakaoPayMapper.findByItemId(itemId);
+	    	kakaoPayMapper.updatePgToken(request.getId(), pg_token);
 	    	
 	    	//RestTemplate: REST API를 사용하여 HTTP 통신을 할 수 있게 해줌
 	        RestTemplate restTemplate = new RestTemplate();
@@ -284,7 +286,7 @@ public class KakaoController {
 	        }
 	        
 	        // 결제 완료 시 상태 변경
-	    	Shipping shipping=shippingRepository.findByItemId(item.getId());
+	    	Shipping shipping=shippingMapper.findByItemId(item.getId());
 	    	shipping.setShippingStatus(Status.READY);
 	    	// 구매자 아이디 넣어주기
 	    	Member buyer = memberService.findByEmail(response.getPartner_user_id());

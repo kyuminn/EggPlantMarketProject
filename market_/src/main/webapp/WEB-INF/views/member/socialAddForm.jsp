@@ -49,7 +49,7 @@
                 <div class="form-group" id="divName">
                     <label for="inputName" class="col-lg-2 control-label">이름</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control onlyHangul" name="name" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15">
+                        <form:input path="name" class="form-control onlyHangul" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15" required="required"/>
                     	<form:errors path="name"/>
                     </div>
                 </div>
@@ -57,7 +57,8 @@
                 <div class="form-group" id="divEmail">
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="email" id="email" value=${email } data-rule-required="true">
+                        <!-- <input type="text" class="form-control" name="email" id="email" value=${email } data-rule-required="true"> -->
+                        <form:input path="email" class="form-control" id="email" value="${email }" data-rule-required="true" required="required"/>
                     	<form:errors path="email"/>
                     </div>
                 </div>
@@ -65,7 +66,8 @@
                 <div class="form-group" id="divNickname">
                     <label for="inputNickname" class="col-lg-2 control-label">별명</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="nickname" id="nickname" data-rule-required="true" maxlength="15" value=${nickname }>
+                        <!-- <input type="text" class="form-control" name="nickname" id="nickname" data-rule-required="true" maxlength="15" value=${nickname }> -->
+                        <form:input path="nickname" class="form-control" id="nickname" value="${nickname }" data-rule-required="true" placeholder="별명" maxlength="15" required="required"/>
                     	<form:errors path="nickname"/>
                     </div>
                 </div>
@@ -73,14 +75,14 @@
                 <div class="form-group" id="divPhoneNumber">
                     <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
                     <div class="col-lg-5">
-                        <input type="tel" class="form-control onlyNumber" id="phoneNumber" name="phoneNum" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
+                        <form:input path="phoneNum" class="form-control onlyNumber" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11" required="required"/>
                     	<form:errors path="phoneNum"/>
                     </div>
                 </div>
                  <div class="form-inline-form-group">
                     <label for="postCode" class="col-lg-2 control-label">우편번호</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="postCode" id="postCode">
+                        <form:input path="postCode" class="form-control"/>
                         <input type="button" class="btn btn-secondary btn-sm" onClick="execDaumPostcode()" value="우편번호 검색">
                     	<form:errors path="postCode"/>
                     </div>
@@ -89,14 +91,14 @@
                 <div class="form-group">
                     <label for="roadAddr" class="col-lg-2 control-label">도로명 주소</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="roadAddr" id="roadAddr">&nbsp;
+                        <form:input path="roadAddr" class="form-control" required="required"/>&nbsp;
                     	<form:errors path="roadAddr"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="detailAddr" class="col-lg-2 control-label">상세 주소</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" name="detailAddr" id="detailAddr">&nbsp;
+                        <form:input path="detailAddr" class="form-control" required="required"/>&nbsp;
                     	<form:errors path="detailAddr"/>
                     </div>
                 </div>

@@ -18,7 +18,7 @@ import teamB.market.domain.rate.Rate;
 import teamB.market.domain.rate.repository.RateRepository;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
-import teamB.market.domain.shipping.repository.ShippingRepository;
+import teamB.market.domain.shipping.mapper.ShippingMapper;
 import teamB.market.web.item.service.ItemService;
 import teamB.market.web.member.service.MemberService;
 
@@ -28,14 +28,14 @@ import teamB.market.web.member.service.MemberService;
 public class OrderController {
 	
 	private final ItemService itemService;
-	private final ShippingRepository shippingRepository;
+	private final ShippingMapper shippingMapper;
 	private final MemberService memberService;
 	private final RateRepository rateRepository;
 	
 	@RequestMapping("/myList/{memberId}")
 	public String myOrderList(@PathVariable("memberId")Long memberId,Model model) {
 		
-		List<Shipping> ls = shippingRepository.findByMemberId(memberId);
+		List<Shipping> ls = shippingMapper.findByMemberId(memberId);
 		
 		//List<Item> itemLs= new ArrayList<Item>();
 		List<Item> readyItem = new ArrayList<Item>();
@@ -45,7 +45,7 @@ public class OrderController {
 		for(int i=0; i<ls.size(); i++) {
 			Item item = itemService.findById(ls.get(i).getItemId());
 			if(item!=null) {
-				Status status = shippingRepository.findByItemId(item.getId()).getShippingStatus();
+				Status status = shippingMapper.findByItemId(item.getId()).getShippingStatus();
 				if(status.equals(Status.READY)) {
 					readyItem.add(item);
 				}else if(status.equals(Status.SHIPPING)) {
@@ -70,7 +70,7 @@ public class OrderController {
 	@GetMapping("/release/{id}")
 	public String releaseItem(@PathVariable("id")Long itemId) {
 		// 출고 완료된 아이템 배송 상태 바꿔주기
-		Shipping shipping = shippingRepository.findByItemId(itemId);
+		Shipping shipping = shippingMapper.findByItemId(itemId);
 		shipping.setShippingStatus(Status.SHIPPING);
 		Long memberId = itemService.findById(itemId).getMemberId();
 		return "redirect:/order/myList/"+memberId;
@@ -79,7 +79,7 @@ public class OrderController {
 	@GetMapping("/confirm/{id}")
 	public String confirmOrder(@PathVariable("id")Long itemId, Model model) {
 		// 구매 확정 
-		Shipping shipping = shippingRepository.findByItemId(itemId);
+		Shipping shipping = shippingMapper.findByItemId(itemId);
 		shipping.setShippingStatus(Status.COMPLETE);
 		
 		// 구매 확정되면 판매자 객체 포인트 업데이트
