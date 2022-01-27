@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import teamB.market.domain.item.Item;
 import teamB.market.domain.member.Member;
 import teamB.market.domain.rate.Rate;
-import teamB.market.domain.rate.repository.RateRepository;
+import teamB.market.domain.rate.mapper.RateMapper;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
 import teamB.market.domain.shipping.mapper.ShippingMapper;
@@ -30,7 +30,7 @@ public class OrderController {
 	private final ItemService itemService;
 	private final ShippingMapper shippingMapper;
 	private final MemberService memberService;
-	private final RateRepository rateRepository;
+	private final RateMapper rateMapper;
 	
 	@RequestMapping("/myList/{memberId}")
 	public String myOrderList(@PathVariable("memberId")Long memberId,Model model) {
@@ -104,7 +104,7 @@ public class OrderController {
 		rate.setMemberId(memberId);
 		rate.setRating(Float.valueOf(rating));
 		System.out.println(rate);
-		rateRepository.save(rate);
+		rateMapper.save(rate);
 		return "redirect:/order/myList/"+memberId;
 	}
 }

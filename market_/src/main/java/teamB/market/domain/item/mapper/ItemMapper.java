@@ -19,7 +19,7 @@ public interface ItemMapper {
 	@Select("select * from item")
     List<Item> findAll();
     
-    @Update("update item set category=#{item.category},name=#{item.name},price=#{item.price},content=#{content},filePath=#{item.filePath} where id=#{id}")
+    @Update("update item set category=#{item.category},name=#{item.name},price=#{item.price},content=#{item.content},filePath=#{item.filePath} where id=#{id}")
     void update(@Param("id")long id, @Param("item")Item updateParam);
     
     @Delete("delete from item where id=#{id}")

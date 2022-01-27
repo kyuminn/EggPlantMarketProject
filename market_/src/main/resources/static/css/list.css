@@ -30,7 +30,9 @@
     line-height: 63px;
 }
 .table-wishlist tr td .img-product img {
-	width: 100%;
+	/*width: 100%;*/
+	width:150px;
+	height:200px;
 }
 .table-wishlist tr td .name-product {
     font-size: 15px;

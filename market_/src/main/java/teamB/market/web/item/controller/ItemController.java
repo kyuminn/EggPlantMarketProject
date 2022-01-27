@@ -26,7 +26,7 @@ import teamB.market.domain.item.Item;
 import teamB.market.domain.member.Member;
 import teamB.market.domain.member.Role;
 import teamB.market.domain.rate.Rate;
-import teamB.market.domain.rate.repository.RateRepository;
+import teamB.market.domain.rate.mapper.RateMapper;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
 import teamB.market.domain.shipping.mapper.ShippingMapper;
@@ -48,7 +48,7 @@ public class ItemController {
 	private final MemberService memberService;
 	private final S3Service s3Service;
 	private final ShippingMapper shippingMapper;
-	private final RateRepository rateRepository;
+	private final RateMapper rateMapper;
 	
     @GetMapping("/list")
     public String itemList(Model model){
@@ -95,7 +95,7 @@ public class ItemController {
     	// 평점 보여주기 위한 Rate hashMap <itemId, rating>
     	HashMap<Long,Float> map = new HashMap<>();
     	for(Item item : completeItemList) {
-    		Rate rate =rateRepository.findByItemId(item.getId());
+    		Rate rate =rateMapper.findByItemId(item.getId());
     		map.put(item.getId(), rate.getRating());
     	}
     	model.addAttribute("map", map);

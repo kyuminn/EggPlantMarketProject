@@ -2,10 +2,15 @@ package teamB.market.domain.question.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import teamB.market.domain.question.Question;
 
+@Mapper
 public interface QuestionMapper {
-    Question save(Question question);
+	
+	
+    void save(Question question);
     Question findById(long id);
     List<Question> findAll();
     List<Question> findByItemId(long itemId);

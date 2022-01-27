@@ -25,7 +25,7 @@
             <div class="product-grid4">
                 <div class="product-image4">
                     <a href="${pageContext.request.contextPath}/item/detail/${item.id}">
-                        <img class="pic-1" src="${item.filePath }">
+                        <img class="pic-1" width="300" height="400" src="${item.filePath }">
                         <!--
                         마우스 갖다댔을 때 나오는 이미지
                          <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-2.jpg"> -->
