@@ -104,7 +104,10 @@ public class ItemController {
 
     @GetMapping("/detail/{id}")
     public String itemDetail(@PathVariable long id, Model model){
-
+    	
+    	// 조회수 +1
+    	itemService.updateHit(id);
+    	
         // 아이디로 상품 정보 가져온 후 model 에 담기
     	Item item = itemService.findById(id);
     	model.addAttribute("item", item);
@@ -206,8 +209,7 @@ public class ItemController {
         
      // Member 객체 Role 수정
         if(memberService.findById(memberId).getRole().equals(Role.BUYER)) {
-            Member member = memberService.findByEmail(email);
-            member.setRole(Role.SELLER);
+            memberService.updateRole(memberId);
         }
         
         

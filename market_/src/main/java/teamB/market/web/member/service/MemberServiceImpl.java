@@ -84,6 +84,12 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.delete(memberId);
 	}
 
+	@Override
+	public void updateRole(long id) {
+		memberMapper.updateRole(id);
+		
+	}
+
 
 
 

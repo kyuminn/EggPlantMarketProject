@@ -16,7 +16,7 @@ public interface ItemMapper {
 	@Select("select * from item where memberId=#{memberId}")
     Item findByMemberId(long memberId);
 	
-	@Select("select * from item")
+	@Select("select * from item order by id desc")
     List<Item> findAll();
     
     @Update("update item set category=#{item.category},name=#{item.name},price=#{item.price},content=#{item.content},filePath=#{item.filePath} where id=#{id}")
@@ -30,4 +30,7 @@ public interface ItemMapper {
     
     @Select("select * from item where orderKey=#{orderKey}")
     Item findByOrderKey(String orderKey);
+    
+    @Update("update item set hit=hit+1 where id=#{id}")
+    void updateHit(long id);
 }

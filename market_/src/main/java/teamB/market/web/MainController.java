@@ -25,7 +25,7 @@ public class MainController {
 	@GetMapping("/")
 	public String main(Model model,HttpServletRequest request) {
 		// 나중에 db연결할때는 최신순 8개만 보여주도록 수정하기.
-		List<Item> items = itemService.findAll();
+		List<Item> items = itemService.selectMainItemList();
 		model.addAttribute("items", items);
 		
 		

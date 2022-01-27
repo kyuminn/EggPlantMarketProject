@@ -24,6 +24,12 @@
 			padding-bottom:10;
 			z-index:2;
 		}
+		
+		.container{
+			width:800px;
+            height:500px;
+            margin:0 auto; /*container 가운데 정렬*/
+		}
 	</style>
 </head>
 <body>
@@ -60,7 +66,7 @@
                     <label for="inputName" class="col-lg-2 control-label">이름</label>
                     <div class="col-lg-5">                
                         <!-- <input type="text" class="form-control onlyHangul" name="name" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15"> -->
-                        <form:input path="name" class="form-control onlyHangul" id="name" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15" required="required"/>
+                        <form:input path="name" class="form-control onlyHangul" id="name" data-rule-required="true" placeholder="이름" maxlength="15" required="required"/>
                         <form:errors path="name"/>
                     </div>
                 </div>
@@ -69,7 +75,7 @@
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-5">
                         <!-- <input type="text" class="form-control" name="email" id="email" data-rule-required="true"> -->
-                        <form:input path="email" class="form-control" id="email" data-rule-required="true" required="required"/>
+                        <form:input path="email" class="form-control" id="email" data-rule-required="true" placeholder="이메일" required="required"/>
                         <form:errors path="email"/>
                     </div>
                 </div>

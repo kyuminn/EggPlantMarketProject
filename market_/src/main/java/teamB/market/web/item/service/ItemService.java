@@ -12,9 +12,10 @@ public interface ItemService {
 	Item findById(long id);
 	Item findByOrderKey(String orderKey);
 	void delete(long id);
-	
 	List<Item> findMyItemList(long memberId);
 	void updateItemDetail(long id, Item updateParam);
+	List<Item> selectMainItemList();
+	void updateHit(long id);
 
 	
 }

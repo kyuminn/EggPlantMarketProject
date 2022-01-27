@@ -12,5 +12,6 @@ public interface MemberService {
     void updatePwd(String email,String tmpPwd);
     Member findById(long id);
     void updateMemberInfo(long id, Member updateParam);
+    void updateRole(long id);
     void delete(long memberId);
 }

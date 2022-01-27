@@ -151,8 +151,6 @@ public class MemberController {
         	return "member/addForm";
         }
         
-
-    	
     	// 이메일 인증 코드 생성
         String emailAuthCode = RandomStringUtils.randomAlphanumeric(8);
     	
@@ -176,15 +174,10 @@ public class MemberController {
     	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
     	member.setAddr(addr);
 
-    	
-    	
-    	
     	//db 에 저장
     	memberService.join(member);
     	System.out.println(member);
-    	
 
-    	
     	// 일반 회원가입의 경우 인증 이메일 전송
     	emailService.sendEmailAuthMail(form.getEmail(), emailAuthCode);
     	model.addAttribute("email",form.getEmail());
@@ -194,9 +187,13 @@ public class MemberController {
 
     // 이메일 인증 완료 Controller 구현하기
     @GetMapping("/emailAuthCallBack")
+    @ResponseBody
     public String emailAuthCallBack(@RequestParam("email")String email,@RequestParam("code")String emailAuthCode) {
     		if(memberService.authenticateEmail(email, emailAuthCode)) {
-    			return "redirect:/login";
+    	        // 회원가입 완료 alert 
+    	        String alertMsg = "<script>alert('회원가입 완료!');location.href='/login';</script>";        
+    	        return alertMsg;
+    			//return "redirect:/login";
     		}
     	return "#"; //이메일 인증 실패시? 어디로 보내지?
     }
@@ -214,7 +211,7 @@ public class MemberController {
     	member.setNickname(loginMember.getNickname());
     	member.setPhoneNum(loginMember.getPhoneNum());
     	
-    	// 주소를 가져와서 공백을 기준으로 우편번호 도로명주소 상세주소 나누기
+    	// 주소를 가져와서 %을 기준으로 우편번호 도로명주소 상세주소 나누기
     	String addr = loginMember.getAddr();
     	String[] addrSplit = addr.split("%");
     	member.setPostCode(addrSplit[0]);

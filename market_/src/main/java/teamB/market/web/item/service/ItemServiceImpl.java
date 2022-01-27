@@ -3,18 +3,22 @@ package teamB.market.web.item.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import teamB.market.domain.item.Item;
 import teamB.market.domain.item.mapper.ItemMapper;
+import teamB.market.domain.shipping.Status;
+import teamB.market.domain.shipping.mapper.ShippingMapper;
 
 
 @Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 	
-	@Autowired
-	private ItemMapper itemMapper;
+
+	private final ItemMapper itemMapper;
+	private final ShippingMapper shippingMapper;
 
 	@Override
 	public void save(Item item) {
@@ -64,6 +68,25 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public void updateItemDetail(long id, Item updateParam) {
 		itemMapper.update(id, updateParam);
+	}
+
+	@Override
+	public List<Item> selectMainItemList() {
+		List<Item> totalLs = itemMapper.findAll();
+		List<Item> onSaleLs = new ArrayList<>();
+		for(Item item : totalLs) {
+			Long itemId= item.getId();
+			if(shippingMapper.findByItemId(itemId).getShippingStatus().equals(Status.ONSALE)) {
+				onSaleLs.add(item);
+			}
+		}
+		return onSaleLs;
+	}
+
+	@Override
+	public void updateHit(long id) {
+		itemMapper.updateHit(id);
+		
 	}
 
 	
