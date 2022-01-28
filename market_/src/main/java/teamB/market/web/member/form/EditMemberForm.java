@@ -7,11 +7,13 @@ import lombok.Setter;
 
 @Getter @Setter
 public class EditMemberForm {
+	@NotBlank
     private String nickname;
+	
     @NotBlank
     private String phoneNum;
-    //private String addr;
-	@NotBlank
+	
+    @NotBlank
     private String postCode;
 	
 	@NotBlank

@@ -41,6 +41,9 @@ public interface MemberMapper {
     @Update("update member set role='SELLER' where id=#{id}")
     void updateRole(long id);
     
+    @Update("update member set pwd=#{pwd} where id=#{id}")
+    void updatePwd(@Param("id")long id,@Param("pwd")String pwd);
+    
     @Delete("delete from member where id=#{id}")
     void delete(long id);
 }

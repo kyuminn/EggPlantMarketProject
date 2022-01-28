@@ -20,8 +20,8 @@
             <hr/>
                 <form:form class="form-signin" modelAttribute="findEmailFormData" action="${pageContext.request.contextPath}/login/find/email" method="post">
                 	<form:input path="name" class="form-control" placeholder="이름"/><br>
-                	<form:input path="phoneNum" class="form-control" placeholder="전화번호"/><br><br>
-                	<form:errors/>
+                	<form:input path="phoneNum" class="form-control" placeholder="전화번호"/><br>
+                	<form:errors class="errorMsg"/>
                 	<button class="btn btn-sm btn-primary btn-block" type="submit">이메일 찾기</button><br>
                 <hr/>
                 </form:form>

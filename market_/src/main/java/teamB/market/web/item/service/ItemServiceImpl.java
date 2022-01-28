@@ -72,14 +72,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> selectMainItemList() {
-		List<Item> totalLs = itemMapper.findAll();
-		List<Item> onSaleLs = new ArrayList<>();
-		for(Item item : totalLs) {
-			Long itemId= item.getId();
-			if(shippingMapper.findByItemId(itemId).getShippingStatus().equals(Status.ONSALE)) {
-				onSaleLs.add(item);
-			}
-		}
+		List<Item> onSaleLs = itemMapper.findLatestItem();
 		return onSaleLs;
 	}
 

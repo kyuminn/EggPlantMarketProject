@@ -29,7 +29,10 @@
 <body>
 <div class="addContainer">
 <form:form modelAttribute="itemAddFormData" action="${pageContext.request.contextPath}/item/add" method="post" encType="multipart/form-data">
-	<h1>상품 등록</h1>
+	<h1>
+	상품 등록
+	<a href="${pageContext.request.contextPath}/"><img src="/images/eggPlant.png" width="70" height="70"></a>
+	</h1>
 	<hr/>
 	<table class="table table-borderless">
 			<tr>
@@ -70,7 +73,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<textarea class="summernote" name="content">Hello summerNote</textarea>
+					<textarea class="summernote" name="content"></textarea>
 				</td>
 			</tr>
 		</table>
@@ -82,7 +85,7 @@
 </div>
 	<script>
       $('.summernote').summernote({
-        placeholder: 'Hello Bootstrap 4',
+        placeholder: '상품 설명을 입력해주세요',
         tabsize: 2,
         height: 500,
         width:800,

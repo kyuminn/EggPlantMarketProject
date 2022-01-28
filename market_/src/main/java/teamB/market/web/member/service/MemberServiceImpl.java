@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updatePwd(String email,String tmpPwd) {
 		Member member = memberMapper.findByEmail(email);
-		member.setPwd(tmpPwd);
+		memberMapper.updatePwd(member.getId(), tmpPwd);
 	}
 
 	@Override

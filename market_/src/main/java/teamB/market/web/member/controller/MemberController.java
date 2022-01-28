@@ -224,14 +224,15 @@ public class MemberController {
         return "member/editForm";
     }
     
-    @ResponseBody
+    //@ResponseBody
     @PostMapping("/edit/{id}")
     public String edit(@Validated @ModelAttribute("member") EditMemberForm form, BindingResult bindingResult,
-    		@RequestParam("currentPhoneNum")String currentPhoneNum,@PathVariable("id")long id){
+    		@RequestParam("currentPhoneNum")String currentPhoneNum,@PathVariable("id")long id,Model model){
 
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "member/editForm";
+            //return "<script>location.replace('/edit/'"+id+");</script>";
         }
 
         // 핸드폰 번호 중복 시 다시 입력폼으로 이동
@@ -253,7 +254,6 @@ public class MemberController {
             }
         }
 
-        
         // 변경 비밀번호 확인이 다시 입력폼으로 이동
         if(!form.getChangePwd().equals(form.getConfirmChangePwd())) {
         	bindingResult.rejectValue("confirmChangePwd", "notMatching");
@@ -261,10 +261,6 @@ public class MemberController {
         }
         
         // 성공 로직
-//        Address addr = new Address();
-//        addr.setPostCode(form.getPostCode());
-//        addr.setRoadAddr(form.getRoadAddr());
-//        addr.setDetailAddr(form.getDetailAddr());
         Member updateParam = new Member();
         
     	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
@@ -274,10 +270,13 @@ public class MemberController {
         updateParam.setPwd(form.getChangePwd());
         
         memberService.updateMemberInfo(id, updateParam);
+        model.addAttribute("memberId", id);
+        return "member/editSuccess";
         // 수정 완료 alert 
-        String alertMsg = "<script>alert('회원정보가 변경되었습니다!');history.go(-1);</script>";        
+        //String alertMsg = "<script>alert('회원정보가 변경되었습니다!');history.go(-1);</script>";        
+        //return alertMsg;
+        
         //return "redirect:/member/edit/"+id;
-        return alertMsg;
     }
     
     @GetMapping("/myPage")

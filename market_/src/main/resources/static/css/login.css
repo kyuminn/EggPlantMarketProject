@@ -76,3 +76,8 @@
     display: block;
     margin-top: 10px;
 }
+
+.errorMsg {
+	color : red;
+	font-size : 15px;
+		}

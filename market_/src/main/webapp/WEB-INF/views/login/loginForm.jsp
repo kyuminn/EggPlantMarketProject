@@ -11,7 +11,6 @@
 	<jsp:include page="../common/header.jsp"/>
 	<link rel="stylesheet" href="/css/login.css">
   </head>
-
   <body>
 <div class="container">
     <div class="row">
@@ -24,7 +23,7 @@
                 	<form:input path="email" class="form-control" placeholder="Email" required="required"/>
                 	<input type="password" name="password" class="form-control" placeholder="Password" required>
                 	<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button><br>
-                	<form:errors/><br>
+                	<form:errors class="errorMsg"/><br>
                 	<label class="checkbox pull-left">
                     	<form:checkbox path="rememberEmail"/>이메일 기억하기
                     </label>

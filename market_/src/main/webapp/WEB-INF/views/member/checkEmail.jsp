@@ -30,7 +30,7 @@
  				<c:if test ="${fn:contains(email,'gmail')}">
     				<h2><a href="<c:url value='https://mail.google.com/mail'/>">>${email}</a></h2>
  				</c:if>
- 				<h2>로 인증 메일을 전송했습니다. 메일함을 확인해주세요!</h2>
+ 				<h2>인증 메일을 전송했습니다. 메일함을 확인해주세요!</h2>
 		</div>
 	</div>
 	

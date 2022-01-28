@@ -18,6 +18,9 @@ public interface ItemMapper {
 	
 	@Select("select * from item order by id desc")
     List<Item> findAll();
+	
+	@Select("select * from item where rownum<=8 order by id desc")
+	List<Item> findLatestItem();
     
     @Update("update item set category=#{item.category},name=#{item.name},price=#{item.price},content=#{item.content},filePath=#{item.filePath} where id=#{id}")
     void update(@Param("id")long id, @Param("item")Item updateParam);

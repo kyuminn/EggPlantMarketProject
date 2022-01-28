@@ -44,7 +44,7 @@ public class MailService {
            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
            mimeMessageHelper.setTo(email); // 메일 수신자
            mimeMessageHelper.setSubject("[가지마켓] 임시 비밀번호 "); // 메일 제목
-           mimeMessageHelper.setText("<html><head></head><body><h2>임시 비밀번호:"+tmpPwd+"</h2></body></html>",true); // 메일 본문 내용, HTML 여부
+           mimeMessageHelper.setText("<html><head></head><body><h2>임시 비밀번호:"+tmpPwd+"</h2><a href='http://localhost:8080/login'>로그인 하기</a></body></html>",true); // 메일 본문 내용, HTML 여부
            javaMailSender.send(mimeMessage);
            log.info("Success!!");
        } catch (MessagingException e) {

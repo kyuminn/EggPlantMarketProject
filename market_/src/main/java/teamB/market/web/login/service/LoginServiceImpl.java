@@ -34,8 +34,11 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public String findUserEmail(String name, String phoneNum) {
 		String userEmail=null;
-		if (memberMapper.findByPhoneNum(phoneNum).getName().equals(name)) {
-			userEmail = memberMapper.findByPhoneNum(phoneNum).getEmail();
+		Member member = memberMapper.findByPhoneNum(phoneNum);
+		if (member!=null) {
+			if (member.getName().equals(name)) {
+				userEmail= member.getEmail();
+			}
 		}
 		return userEmail;
 	}
