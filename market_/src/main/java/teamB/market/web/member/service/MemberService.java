@@ -13,5 +13,7 @@ public interface MemberService {
     Member findById(long id);
     void updateMemberInfo(long id, Member updateParam);
     void updateRole(long id);
+    void updatePoint(int point, long id);
+    void updateRatingAvg(float avg, long id);
     void delete(long memberId);
 }

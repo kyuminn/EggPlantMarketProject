@@ -90,6 +90,18 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public void updatePoint(int point, long id) {
+		memberMapper.updatePoint(point, id);
+		
+	}
+
+	@Override
+	public void updateRatingAvg(float avg, long id) {
+		memberMapper.updateRatingAvg(avg, id);
+		
+	}
+
 
 
 

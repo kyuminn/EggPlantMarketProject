@@ -285,12 +285,12 @@ public class KakaoController {
 	        	e.printStackTrace();
 	        }
 	        
-	        // 결제 완료 시 상태 변경
+	        // 결제 완료 시 상태 변경 - 결제 완료: READY
 	    	Shipping shipping=shippingMapper.findByItemId(item.getId());
-	    	shipping.setShippingStatus(Status.READY);
+	    	shippingMapper.updateShippingStatus(shipping.getId(), Status.READY);
 	    	// 구매자 아이디 넣어주기
 	    	Member buyer = memberService.findByEmail(response.getPartner_user_id());
-	    	shipping.setMemberId(buyer.getId());
+	    	shippingMapper.updateBuyerId(buyer.getId(), shipping.getId());
 	    	
 	    	model.addAttribute("memberId", buyer.getId());
 	    	System.out.println("responseBody:"+kakaoPayResponse.getBody());

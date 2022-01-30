@@ -69,10 +69,12 @@ public class TossPayController {
     	// 결제 완료 시 상태 변경
     	Item item = itemService.findByOrderKey(orderId);
     	Shipping shipping=shippingMapper.findByItemId(item.getId());
-    	shipping.setShippingStatus(Status.READY);
+    	//shipping.setShippingStatus(Status.READY);
+    	shippingMapper.updateShippingStatus(shipping.getId(),Status.READY);
     	
     	// 이때 구매자 아이디 넣어주기
-    	shipping.setMemberId(memberId);
+    	//shipping.setMemberId(memberId);
+    	shippingMapper.updateBuyerId(memberId, shipping.getId());
     	
         HttpHeaders headers = new HttpHeaders();
         // headers.setBasicAuth(SECRET_KEY, ""); // spring framework 5.2 이상 버전에서 지원
