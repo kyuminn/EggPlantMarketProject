@@ -91,7 +91,7 @@
 </div>
 	<script>
 		$('.summernote').summernote({
-			height:700,
+			height:300,
 			minHeight:null
 		})
 

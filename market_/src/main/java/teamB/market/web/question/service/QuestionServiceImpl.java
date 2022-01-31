@@ -1,50 +1,58 @@
 package teamB.market.web.question.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import teamB.market.domain.question.Question;
-import teamB.market.domain.question.repository.QuestionRepository;
-
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import teamB.market.domain.question.IsReplied;
+import teamB.market.domain.question.Question;
+import teamB.market.domain.question.mapper.QuestionMapper;
 
 @Service
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
 
-    private final QuestionRepository questionRepository;
+	private final QuestionMapper questionMapper;
 
     @Override
-    public Question save(Question question) {
-        return questionRepository.save(question);
+    public void save(Question question) {
+         questionMapper.save(question);
     }
 
     @Override
     public List<Question> list() {
-        return questionRepository.findAll();
+        return questionMapper.findAll();
     }
 
     @Override
     public Question findById(long id) {
-        return questionRepository.findById(id);
+        return questionMapper.findById(id);
     }
 
     @Override
     public List<Question> findByItemId(long itemId) {
-        return questionRepository.findByItemId(itemId);
+        return questionMapper.findByItemId(itemId);
     }
 
     @Override
     public void delete(long id) {
-        questionRepository.delete(id);
+        questionMapper.delete(id);
     }
 
     @Override
     public void update(long id, Question updateParam) {
-        questionRepository.update(id, updateParam);
+        questionMapper.update(id, updateParam);
     }
 
     @Override
     public List<Question> findByMemberId(long id) {
-        return questionRepository.findByMemberId(id);
+        return questionMapper.findByMemberId(id);
     }
+
+	@Override
+	public void updateReplyStatus(long id,IsReplied isReplied) {
+		questionMapper.updateReplyStatus(id,isReplied);
+		
+	}
 }

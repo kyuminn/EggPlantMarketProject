@@ -34,7 +34,7 @@
         <table class="table table-borderless">
             <tr>
                 <th>제목</th>
-                <td><form:input path="title"/>
+                <td><form:input path="title" required="required"/>
                     <form:errors path="title"/>
                 </td>
             </tr>
@@ -52,15 +52,15 @@
             </tr>
             <tr>
                 <th colspan="3">질문 내용</th>
-                <form:errors path="content"/>
+                <form:errors path="content" required="required"/>
             </tr>
             <tr>
                 <td colspan="3">
-                    <textarea class="summernote" name="content">Hello summerNote</textarea>
+                    <textarea class="summernote" name="content"></textarea>
                 </td>
             </tr>
         </table>
-        <input type="submit" class="btn btn-primary btn-lg" value="상품 등록">
+        <input type="submit" class="btn btn-primary btn-lg" value="질문 등록">
 
         <!-- sellerId 조회를 위해 session에 저장된 에미엘 값 넣어주기 -->
         <input type="hidden" name="loginSession" value="${loginSession}">
@@ -68,9 +68,9 @@
 </div>
 <script>
     $('.summernote').summernote({
-        placeholder: 'Hello Bootstrap 4',
+        placeholder: '질문 내용을 입력해주세요',
         tabsize: 2,
-        height: 500,
+        height: 200,
         width:800,
         lang: "ko-KR"
     });

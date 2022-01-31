@@ -1,35 +1,37 @@
 package teamB.market.web.reply.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import teamB.market.domain.question.Reply;
-import teamB.market.domain.question.repository.ReplyRepository;
-
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import teamB.market.domain.question.Reply;
+import teamB.market.domain.question.mapper.ReplyMapper;
 
 @Service
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 
-    private final ReplyRepository replyRepository;
+    //private final replyMapper replyMapper;
+	private final ReplyMapper replyMapper;
 
     @Override
-    public Reply save(Reply reply) {
-        return replyRepository.save(reply);
+    public void save(Reply reply) {
+        replyMapper.save(reply);
     }
 
     @Override
     public List<Reply> findByQuestionId(long id) {
-        return replyRepository.findByQuestionId(id);
+        return replyMapper.findByQuestionId(id);
     }
 
     @Override
     public void delete(long id) {
-        replyRepository.delete(id);
+        replyMapper.delete(id);
     }
 
     @Override
     public Reply findById(long id) {
-        return replyRepository.findById(id);
+        return replyMapper.findById(id);
     }
 }

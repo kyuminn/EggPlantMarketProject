@@ -89,9 +89,12 @@ public class QuestionController {
 
         questionService.save(question);
 
-        return "redirect:/question/list/" + itemId;
+        //return "redirect:/question/list/" + itemId;
+        //나의 질문 리스트로 리다이렉트
+        return "redirect:/question/myList/"+loginMember.getId();
     }
-
+    
+    //특정 아이템에 대한 질문 리스트 보여주기
     @GetMapping("/list/{itemId}")
     public String list(@PathVariable long itemId, Model model){
 
@@ -107,12 +110,12 @@ public class QuestionController {
 
         return "question/list";
     }
-
+    
+    // 나의 문의
     @GetMapping("/myList/{memberId}")
     public String myList(@PathVariable long memberId, Model model){
 
         List<Question> questionList = questionService.findByMemberId(memberId);
-
         model.addAttribute("questionList", questionList);
 
         return "question/myList";
@@ -183,6 +186,13 @@ public class QuestionController {
         Question question = questionService.findById(questionId);
         question.setTitle(form.getTitle());
         question.setContent(form.getContent());
+        
+        // 수정된 시간 저장
+        LocalDateTime current = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        String currentTime = current.format(formatter);
+        question.setCurrentTime(currentTime);
+        
         questionService.update(questionId, question);
         return "redirect:/question/detail/" + questionId;
     }

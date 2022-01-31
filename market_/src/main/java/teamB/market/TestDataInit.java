@@ -12,7 +12,6 @@ import teamB.market.domain.member.EmailAuth;
 import teamB.market.domain.member.Member;
 import teamB.market.domain.question.IsReplied;
 import teamB.market.domain.question.Question;
-import teamB.market.domain.question.repository.QuestionRepository;
 import teamB.market.domain.shipping.Shipping;
 import teamB.market.domain.shipping.Status;
 
