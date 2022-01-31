@@ -24,6 +24,6 @@ public class MVCConfig implements WebMvcConfigurer {
 				.addPathPatterns("/**")
 				.excludePathPatterns("/","/item/detail/*","/myapp/**", "/member/add","/member/socialAdd","/member/emailAuthCallBack",
 						"/login/**", "/logout", "/css/**", "/images/**", "/icons/**",
-						"/javascript/**", "/error/**");
+						"/javascript/**", "/error/**","/item/search/*");
 	}
 }

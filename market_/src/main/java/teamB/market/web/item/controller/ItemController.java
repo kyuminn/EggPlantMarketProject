@@ -60,6 +60,23 @@ public class ItemController {
         return "item/list";
     }
     
+    // 상품 키워드로 검색
+    @GetMapping("/search/keyword")
+    public String keywordList(@RequestParam String keyword,Model model) {
+    	List<Item> ls = itemService.findByKeyword(keyword);
+    	model.addAttribute("ls", ls);
+    	return "item/keywordList";
+    }
+    
+    // 상품 카테고리로 검색
+    @GetMapping("/search/category")
+    public String categoryList(@RequestParam String category,Model model) {
+    	List<Item> ls = itemService.findByCategory(category);
+    	model.addAttribute("category", category);
+    	model.addAttribute("ls", ls);
+    	return "item/categoryList";
+    }
+    
     // 나의 판매글 목록 가져오기
     @GetMapping("/myList/{memberId}")
     public String myItemList(@PathVariable("memberId")long memberId,Model model) {

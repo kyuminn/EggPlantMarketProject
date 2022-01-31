@@ -53,6 +53,7 @@ public class QuestionController {
         String loginEmail = (String) httpSession.getAttribute("loginSession");
         Member loginMember = memberService.findByEmail(loginEmail);
         String nickname = loginMember.getNickname();
+        
 
         form.setItemId(itemId);
         form.setWriter(nickname);
@@ -131,8 +132,12 @@ public class QuestionController {
         Member loginMember = memberService.findByEmail(loginEmail);
         Question question = questionService.findById(questionId);
 
+        // question 작성한 사람이 수정/삭제 할 수 있게
         // question 작성한 회원정보 가져오기
-//        Member buyer = memberService.findById(question.getMemberId());
+        Member buyer = memberService.findById(question.getMemberId());
+        if (loginMember.getEmail().equals(buyer.getEmail())){
+        	model.addAttribute("isAsker", true);
+        }
 
         // question 객체의 아이템 아이디로 item 객체 가져오기
         Item item = itemService.findById(question.getItemId());

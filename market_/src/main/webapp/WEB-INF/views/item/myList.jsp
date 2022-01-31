@@ -19,7 +19,12 @@
 			        <div class="main-heading mb-10">나의 판매글 목록
 			        <a href="${pageContext.request.contextPath }/"><img src="/images/eggPlant.png" width="50" height="50"></a>
 			        </div>
-			       <hr/> 
+			       <hr/>
+			       <c:if test="${empty onSaleItemList && empty readyItemList && empty shippingItemList && empty completeItemList }">
+			       	  <h4>판매중인 상품이 없습니다
+			       	  <input type="button" class="btn btn-success" value="판매글 작성" onclick="window.location.href='${pageContext.request.contextPath}/item/add'"> 
+			       	</h4>
+			       </c:if> 
 					<c:if test="${!empty onSaleItemList}">
 			        <h3>판매중</h3>
 			        <div class="table-wishlist">

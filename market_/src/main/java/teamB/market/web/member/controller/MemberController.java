@@ -299,9 +299,10 @@ public class MemberController {
     
     @PostMapping("/convertPoint/{id}")
     public String convertMyPoint(@PathVariable("id")Long memberId) {
-    	Member member = memberService.findById(memberId);
+    	//Member member = memberService.findById(memberId);
     	// 멤버의 포인트 0으로 초기화
-    	member.setPoint(0);
+    	//member.setPoint(0);
+    	memberService.updatePoint(0, memberId);
     	return "redirect:/member/myPoint/"+memberId;
     }
 }

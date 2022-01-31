@@ -21,19 +21,20 @@
 			width:800px;
 			height:500px;
 			margin:0 auto; /*container 가운데 정렬*/
+			padding-top:50px; /*위쪽 여백 설정*/
 		}
 	</style>
 </head>
 <body>
 <div class="addContainer">
 	<form:form>
-	<h1>문의 내용</h1>
+	<h1>문의 내용 <input type="button" class="btn btn-primary" value="목록" onclick="location.href='/question/list/${question.itemId}'"></h1>
 	<hr/>
-		<c:if test="${status}">
+		<c:if test="${isAsker}">
 				<input type="button" value="수정" onclick="location.href='/question/edit/${question.id}'">&nbsp;
 				<input type="button" value="삭제" onclick="location.href='/question/delete/${question.id}'">
 		</c:if>
-		<input type="button" value="목록" onclick="location.href='/question/list/${question.itemId}'">
+		
 	<table class="table table-borderless">
 			<tr>
 				<th>제목</th>
@@ -44,7 +45,7 @@
 			<tr>
 				<th>날짜</th>
 				<td>
-					${question.date}
+					${question.currentTime}
 				</td>
 			</tr>
 			<tr>
@@ -62,6 +63,7 @@
 			</tr>
 		</table>
 	</form:form>
+	<!-- 판매자만 질문글에 댓글 달 수 있도록 -->
 	<c:if test="${status}">
 	<div class="card">
 		<form action="/reply/${question.id}" method="post">

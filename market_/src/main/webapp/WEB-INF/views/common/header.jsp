@@ -59,7 +59,8 @@
                         <div class="header_search">
                             <div class="header_search_content">
                                 <div class="header_search_form_container">
-                                    <form action="#" class="header_search_form clearfix"> <input type="search" required="required" class="header_search_input" placeholder="상품 검색하기">
+                                    <form action="${pageContext.request.contextPath}/item/search/keyword"  method="get" class="header_search_form clearfix">
+                                    		 <input type="search" name="keyword" required="required" class="header_search_input" placeholder="상품 검색하기">
 											<button type="submit" class="header_search_button trans_300" value="Submit"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt=""></button>
                                     </form>
                                 </div>

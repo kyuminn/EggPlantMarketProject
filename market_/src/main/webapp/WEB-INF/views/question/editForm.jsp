@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QnA 등록</title>
+    <title>QnA 수정</title>
 
     <!-- include libraries(jQuery, bootstrap) -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="addContainer">
-    <form:form modelAttribute="question" action="${pageContext.request.contextPath}/question/edit/${question.itemId}" method="post">
+    <form:form modelAttribute="question" action="${pageContext.request.contextPath}/question/edit/${question.id}" method="post">
         <h1>문의내용 수정</h1>
         <hr/>
         <table class="table table-borderless">
@@ -41,7 +41,7 @@
             <tr>
                 <th>날짜</th>
                 <td>
-                    <form:input path="date" readonly="true"/>
+                    <form:input path="currentTime" readonly="true"/>
                 </td>
             </tr>
             <tr>
@@ -56,11 +56,11 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <textarea class="summernote" name="content">Hello summerNote</textarea>
+                    <textarea class="summernote" name="content">${question.content }</textarea>
                 </td>
             </tr>
         </table>
-        <input type="submit" class="btn btn-primary btn-lg" value="상품 등록">
+        <input type="submit" class="btn btn-primary btn-lg" value="질문 수정">
 
         <!-- sellerId 조회를 위해 session에 저장된 에미엘 값 넣어주기 -->
         <input type="hidden" name="loginSession" value="${loginSession}">

@@ -2,8 +2,14 @@ package teamB.market.domain.item.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import teamB.market.domain.item.Category;
 import teamB.market.domain.item.Item;
 
 @Mapper
@@ -34,6 +40,12 @@ public interface ItemMapper {
     
     @Select("select * from item where orderKey=#{orderKey}")
     Item findByOrderKey(String orderKey);
+    
+    @Select("select * from item where name like '%' || #{keyword} || '%' and id in (select itemId from shipping where shippingStatus='ONSALE')")
+    List<Item> findByKeyWord(String keyword);
+    
+    @Select("select * from item where category=#{category} and id in (select itemId from shipping where shippingStatus='ONSALE')")
+    List<Item> findByCategory(Category category);
     
     @Update("update item set hit=hit+1 where id=#{id}")
     void updateHit(long id);

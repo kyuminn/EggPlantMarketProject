@@ -73,8 +73,9 @@
 				<td colspan="2">
 					<button type="button" class="btn_cart"><img src="/icons/wish.png" height="50" width="50"></button>&nbsp;&nbsp;&nbsp;
 					<a href="${pageContext.request.contextPath}/kakao/pay/${item.id}"><img src="/images/kakao_pay.png"></a>&nbsp;&nbsp;&nbsp;
-					<button type="button" id="payment-button"><img src="/images/toss_pay.png" height ="50" width="100" /></button>
-					<a href="${pageContext.request.contextPath}/question/list/${item.id}">상품 문의</a>
+					<button type="button" id="payment-button"><img src="/images/toss_pay.png" height ="50" width="100" /></button>&nbsp;&nbsp;&nbsp;
+					<input type="button" class="btn btn-success" value="상품 문의" onclick="window.location.href='${pageContext.request.contextPath}/question/list/${item.id}'" >
+					<!--  <a href="${pageContext.request.contextPath}/question/list/${item.id}">상품 문의</a>-->
 				</td>
 			</tr>
 			<tr>

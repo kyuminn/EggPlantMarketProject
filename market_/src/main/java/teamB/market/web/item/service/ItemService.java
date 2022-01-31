@@ -2,6 +2,7 @@ package teamB.market.web.item.service;
 
 import java.util.List;
 
+import teamB.market.domain.item.Category;
 import teamB.market.domain.item.Item;
 
 
@@ -15,6 +16,8 @@ public interface ItemService {
 	List<Item> findMyItemList(long memberId);
 	void updateItemDetail(long id, Item updateParam);
 	List<Item> selectMainItemList();
+	List<Item> findByKeyword(String keyword);
+	List<Item> findByCategory(String category);
 	void updateHit(long id);
 
 	
