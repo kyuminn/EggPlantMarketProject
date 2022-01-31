@@ -67,7 +67,7 @@
     <a class="nav-link" href="${pageContext.request.contextPath}/item/search/category?category=ETC">기타</a>
   </li>
 	</ul>
-	<hr/>
+	<br><br>
 </c:if>
 </body>
 </html>

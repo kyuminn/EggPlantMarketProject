@@ -77,6 +77,13 @@ public class ItemController {
     	return "item/categoryList";
     }
     
+    // 조건으로 검색
+    @PostMapping("/search/condition")
+    public String conditionList(@RequestParam String condition,Model model) {
+    	List<Item> ls = itemService.findByCondition(condition);
+    	model.addAttribute("items", ls);
+    	return "main";
+    }
     // 나의 판매글 목록 가져오기
     @GetMapping("/myList/{memberId}")
     public String myItemList(@PathVariable("memberId")long memberId,Model model) {

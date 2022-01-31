@@ -47,6 +47,18 @@ public interface ItemMapper {
     @Select("select * from item where category=#{category} and id in (select itemId from shipping where shippingStatus='ONSALE')")
     List<Item> findByCategory(Category category);
     
+    @Select("select * from item where id in (select itemId from shipping where shippingStatus='ONSALE') order by hit desc")
+    List<Item> findByHighHit();
+    
+    @Select("select * from item where id in (select itemId from shipping where shippingStatus='ONSALE') order by price")
+    List<Item> findByLowPrice();
+    
+    @Select("select a.id,a.memberid,a.category,a.name,a.price,a.hit,a.content,a.orderKey,a.filePath from item a"
+    		+ " join member b on a.memberId=b.id "
+    		+ "where a.id in (select itemId from shipping where shippingStatus='ONSALE') "
+    		+ "order by b.ratingAvg desc")
+    List<Item> findByHighRate();
+    
     @Update("update item set hit=hit+1 where id=#{id}")
     void updateHit(long id);
 }

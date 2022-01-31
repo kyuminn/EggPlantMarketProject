@@ -103,6 +103,21 @@ public class ItemServiceImpl implements ItemService {
 		return ls;
 	}
 
+	@Override
+	public List<Item> findByCondition(String condition) {
+		List<Item> ls = new ArrayList<Item>();
+		if (condition.equals("highHit")) {
+			ls = itemMapper.findByHighHit();
+		}else if(condition.equals("lowPrice")) {
+			ls = itemMapper.findByLowPrice();
+		}else if(condition.equals("recent")) {
+			ls = itemMapper.findLatestItem();
+		}else if(condition.equals("highRate")) {
+			ls = itemMapper.findByHighRate();
+		}
+		return ls;
+	}
+
 	
 	
 }

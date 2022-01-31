@@ -37,7 +37,18 @@
 	<hr/>-->
 	<jsp:include page="common/tab.jsp"/>
 	<c:if test="${!empty items }">
-	<h3>이 상품은 어떠세요?</h3><br><br>
+	<form action="${pageContext.request.contextPath}/item/search/condition" method="post">
+	<label for="select">조건으로 검색하기</label>
+	<select id="select" name="condition">
+		<option value="recent">최신 순(기본)</option>
+		<option value="highHit">조회수 높은 순</option>
+		<option value="highRate">판매자 평점 높은 순</option>
+		<option value="lowPrice">낮은 가격 순</option>
+	</select>
+	<input type="submit" value="검색">
+	</form>
+	<br><br>
+	<h3>이 상품은 어떠세요?</h3>
 	<div class="container">
     <div class="row">
     <c:forEach var="item" items="${items }">

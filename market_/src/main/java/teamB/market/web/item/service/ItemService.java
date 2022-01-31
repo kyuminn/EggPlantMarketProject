@@ -18,6 +18,7 @@ public interface ItemService {
 	List<Item> selectMainItemList();
 	List<Item> findByKeyword(String keyword);
 	List<Item> findByCategory(String category);
+	List<Item> findByCondition(String condition);
 	void updateHit(long id);
 
 	
