@@ -58,7 +58,7 @@
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-5">
                         <!-- <input type="text" class="form-control" name="email" id="email" value=${email } data-rule-required="true"> -->
-                        <form:input path="email" class="form-control" id="email" value="${email }" data-rule-required="true" required="required"/>
+                        <form:input path="email" class="form-control" id="email" value="${email }" data-rule-required="true" required="required" readonly="true"/>
                     	<form:errors path="email"/>
                     </div>
                 </div>
