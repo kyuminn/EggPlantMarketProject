@@ -11,7 +11,6 @@ import teamB.market.domain.item.Category;
 public class AddItemForm {
     private long id;
     private long sellerId;
-    
     private Category category;
     @NotBlank
     private String name;
@@ -20,6 +19,5 @@ public class AddItemForm {
     @NotBlank
     private String content;
     
-    //private String uploadFile; 
 
 }

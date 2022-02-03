@@ -8,10 +8,8 @@ import lombok.Setter;
 public class KakaoApprovalRequest {
 	private long id;
 	private long itemId;
-	// 구매자 아이디
 	private long memberId;
 	private String tid;
-	//nullable
 	private String pgToken;
 	
 }

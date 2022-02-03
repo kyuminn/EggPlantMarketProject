@@ -213,7 +213,6 @@ public class ItemController {
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("itemAddFormData")AddItemForm form,Model model,HttpSession session){
-    	// 로그인 되어 있지 않을 경우 인터셉터로 리다이렉트 하는 방법 구현해놓기..
     	
     	// 세션에서 로그인 정보 가져와서 모델에 이메일 값 넣어주기
     	model.addAttribute("loginSession",session.getAttribute("loginSession"));

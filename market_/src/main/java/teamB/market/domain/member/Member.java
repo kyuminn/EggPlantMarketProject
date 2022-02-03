@@ -17,7 +17,6 @@ public class Member {
     private String nickname;
     private String pwd;
     private String phoneNum;
-    //private Address addr;
     private String addr;
     private String emailAuthCode; 
     private EmailAuth isEmailAuth;  

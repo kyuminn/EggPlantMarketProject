@@ -90,7 +90,6 @@ public class QuestionController {
 
         questionService.save(question);
 
-        //return "redirect:/question/list/" + itemId;
         //나의 질문 리스트로 리다이렉트
         return "redirect:/question/myList/"+loginMember.getId();
     }
@@ -127,7 +126,6 @@ public class QuestionController {
                          @RequestParam(required = false) String content, Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession(false);
-//        Member loginMember = (Member) session.getAttribute("loginMember");
         String loginEmail = (String) session.getAttribute("loginSession");
         Member loginMember = memberService.findByEmail(loginEmail);
         Question question = questionService.findById(questionId);
@@ -151,12 +149,6 @@ public class QuestionController {
             model.addAttribute("reply_state", 1);
         }
 
-        // 아이템 판매자와 질문작성자만 댓글 등록 가능
-//        if(loginMember.getEmail().equals(seller.getEmail()) || loginMember.getEmail().equals(buyer.getEmail())){
-//            model.addAttribute("reply_status", true);
-//        }
-
-        // --------------------------------------------------------- //
 
         List<Reply> replyList = replyService.findByQuestionId(questionId);
 

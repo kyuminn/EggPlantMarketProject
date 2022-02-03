@@ -28,8 +28,6 @@ public interface MemberMapper {
     @Select("select * from member where phoneNum=#{phoneNum}")
     Member findByPhoneNum(String phoneNum);
     
-    //List<Member> findAll();
-    
     // parameter가 두개 이상인 경우 @Param 으로 접근 이름 지정해주기
     @Update("update member set isEmailAuth=#{mem.isEmailAuth} where id=#{id}")
     void updateIsEmailAuth(@Param("id")long id, @Param("mem")Member updateParam);

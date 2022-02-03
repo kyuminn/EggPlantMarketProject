@@ -17,7 +17,6 @@ public class ItemServiceImpl implements ItemService {
 	
 
 	private final ItemMapper itemMapper;
-	//private final ShippingMapper shippingMapper;
 
 	@Override
 	public void save(Item item) {

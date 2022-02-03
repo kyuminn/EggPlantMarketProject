@@ -35,7 +35,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginFormData")LoginForm form,@CookieValue(value="rememberEmail",required=false)Cookie emailCookie){
-       // model.addAttribute("member", new LoginForm());
     	// 이메일 기억하기 쿠기 값이 있는 경우
     	if (emailCookie!=null) {
     		form.setEmail(emailCookie.getValue());
@@ -83,7 +82,6 @@ public class LoginController {
         // 성공 로직 (session 에 회원 이메일 정보 저장)
         session.setAttribute("loginSession", form.getEmail());
 
-        //return "redirect:/";
         return "redirect:"+redirectURL;
     }
 
