@@ -86,11 +86,6 @@ public class MemberController {
     	}else if(access.equals("naver")) {
     		member.setRoute(Route.NAVER);
     	}
-
-//    	Address addr = new Address();
-//    	addr.setPostCode(form.getPostCode());
-//    	addr.setRoadAddr(form.getRoadAddr());
-//    	addr.setDetailAddr(form.getDetailAddr());
     	
     	//DB varchar2 type과 맞춰서 String 값 넣어주기
     	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
@@ -98,7 +93,6 @@ public class MemberController {
     	member.setEmail(form.getEmail());
     	member.setName(form.getName());
     	member.setNickname(form.getNickname());
-    	//member.setRole(Role.BUYER);
     	member.setPhoneNum(form.getPhoneNum());
     	//소셜 회원가입의 경우 바로 이메일 인증상태 넣어주기
     	member.setIsEmailAuth(EmailAuth.COMPLETE);
@@ -113,7 +107,7 @@ public class MemberController {
         // 회원가입 완료 alert 
         String alertMsg = "<script>alert('회원가입 완료!');location.href='/login';</script>";        
         return alertMsg;
-    	//return "redirect:/login";
+
     }
     
     //일반 회원가입
@@ -162,15 +156,10 @@ public class MemberController {
     	member.setName(form.getName());
     	member.setNickname(form.getNickname());
     	member.setPwd(form.getPwd());
-    	//member.setRole(Role.BUYER); // default 값 BUYER
     	member.setEmailAuthCode(emailAuthCode);
     	member.setPhoneNum(form.getPhoneNum());
     	
     	//주소 객체 저장
-//    	Address addr = new Address();
-//    	addr.setPostCode(form.getPostCode());
-//    	addr.setRoadAddr(form.getRoadAddr());
-//    	addr.setDetailAddr(form.getDetailAddr());
     	String addr= form.getPostCode()+"%"+form.getRoadAddr()+"%"+form.getDetailAddr();
     	member.setAddr(addr);
 
@@ -193,9 +182,8 @@ public class MemberController {
     	        // 회원가입 완료 alert 
     	        String alertMsg = "<script>alert('회원가입 완료!');location.href='/login';</script>";        
     	        return alertMsg;
-    			//return "redirect:/login";
     		}
-    	return "#"; //이메일 인증 실패시? 어디로 보내지?
+    	return "#"; //이메일 인증 실패시
     }
 
 
@@ -224,7 +212,6 @@ public class MemberController {
         return "member/editForm";
     }
     
-    //@ResponseBody
     @PostMapping("/edit/{id}")
     public String edit(@Validated @ModelAttribute("member") EditMemberForm form, BindingResult bindingResult,
     		@RequestParam("currentPhoneNum")String currentPhoneNum,@PathVariable("id")long id,Model model){
@@ -232,7 +219,6 @@ public class MemberController {
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "member/editForm";
-            //return "<script>location.replace('/edit/'"+id+");</script>";
         }
 
         // 핸드폰 번호 중복 시 다시 입력폼으로 이동
@@ -272,11 +258,6 @@ public class MemberController {
         memberService.updateMemberInfo(id, updateParam);
         model.addAttribute("memberId", id);
         return "member/editSuccess";
-        // 수정 완료 alert 
-        //String alertMsg = "<script>alert('회원정보가 변경되었습니다!');history.go(-1);</script>";        
-        //return alertMsg;
-        
-        //return "redirect:/member/edit/"+id;
     }
     
     @GetMapping("/myPage")
@@ -299,9 +280,7 @@ public class MemberController {
     
     @PostMapping("/convertPoint/{id}")
     public String convertMyPoint(@PathVariable("id")Long memberId) {
-    	//Member member = memberService.findById(memberId);
     	// 멤버의 포인트 0으로 초기화
-    	//member.setPoint(0);
     	memberService.updatePoint(0, memberId);
     	return "redirect:/member/myPoint/"+memberId;
     }

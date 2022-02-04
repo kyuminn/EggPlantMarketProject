@@ -37,7 +37,6 @@ public class OrderController {
 		
 		List<Shipping> ls = shippingMapper.findByMemberId(memberId);
 		
-		//List<Item> itemLs= new ArrayList<Item>();
 		List<Item> readyItem = new ArrayList<Item>();
 		List<Item> shippingItem = new ArrayList<Item>();
 		List<Item> completeItem = new ArrayList<Item>();
@@ -72,7 +71,6 @@ public class OrderController {
 	public String releaseItem(@PathVariable("id")Long itemId) {
 		// 출고 완료된 아이템 배송 상태 바꿔주기
 		Shipping shipping = shippingMapper.findByItemId(itemId);
-//		shipping.setShippingStatus(Status.SHIPPING);
 		shippingMapper.updateShippingStatus(shipping.getId(), Status.SHIPPING);
 		Long memberId = itemService.findById(itemId).getMemberId();
 		return "redirect:/item/myList/"+memberId;
@@ -84,13 +82,11 @@ public class OrderController {
 	public String confirmOrder(@PathVariable("id")Long itemId, Model model) {
 		// 구매 확정 
 		Shipping shipping = shippingMapper.findByItemId(itemId);
-		//shipping.setShippingStatus(Status.COMPLETE);
 		shippingMapper.updateShippingStatus(shipping.getId(), Status.COMPLETE);
 		
 		// 구매 확정되면 판매자 객체 포인트 업데이트
 		Item item = itemService.findById(itemId);
 		Member seller = memberService.findById(item.getMemberId());
-		//seller.setPoint(item.getPrice());
 		memberService.updatePoint(item.getPrice(), seller.getId());
 		
 		model.addAttribute("item", itemService.findById(itemId));
@@ -109,7 +105,6 @@ public class OrderController {
 		rate.setItemId(itemId);
 		rate.setMemberId(memberId);
 		rate.setRating(Float.valueOf(rating));
-		System.out.println(rate);
 		rateMapper.save(rate);
 		
 		// 판매자 정보

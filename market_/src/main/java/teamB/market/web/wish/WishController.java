@@ -41,7 +41,7 @@ public class WishController {
         Wish wish = new Wish();
         wish.setItemId(itemId);
         wish.setMemberId(memberId);
-        result=wishService.saveWish(wish);
+        result=wishService.save(wish);
     	return result;
     }
 
@@ -65,7 +65,7 @@ public class WishController {
 	@GetMapping("/remove/{itemId}")
 	public String delete(@PathVariable("itemId")long itemId) {
 		wishService.remove(itemId);
-		// redirect 시 controller로 간다는거 잊지말구..
+		// redirect 시 controller로 재요청
 		return "redirect:/wish/list";
 	}
 }

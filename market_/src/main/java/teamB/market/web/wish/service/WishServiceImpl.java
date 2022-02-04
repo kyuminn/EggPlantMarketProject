@@ -17,7 +17,7 @@ public class WishServiceImpl implements WishService{
 	private final WishMapper wishMapper;
 	
 	@Override
-	public int saveWish(Wish wish) {
+	public int save(Wish wish) {
 		int result = -1;
 		// 이미 찜한 상품인 경우 
 		List<Wish> dbWish = wishMapper.findByMemberId(wish.getMemberId());

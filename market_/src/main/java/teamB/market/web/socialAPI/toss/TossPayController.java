@@ -40,7 +40,6 @@ public class TossPayController {
 	private final MemberService memberService;
 	
 	private final RestTemplate restTemplate = new RestTemplate();
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostConstruct
@@ -69,11 +68,9 @@ public class TossPayController {
     	// 결제 완료 시 상태 변경
     	Item item = itemService.findByOrderKey(orderId);
     	Shipping shipping=shippingMapper.findByItemId(item.getId());
-    	//shipping.setShippingStatus(Status.READY);
     	shippingMapper.updateShippingStatus(shipping.getId(),Status.READY);
     	
     	// 이때 구매자 아이디 넣어주기
-    	//shipping.setMemberId(memberId);
     	shippingMapper.updateBuyerId(memberId, shipping.getId());
     	
         HttpHeaders headers = new HttpHeaders();

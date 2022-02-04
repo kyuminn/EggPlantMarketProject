@@ -3,7 +3,6 @@ package teamB.market.web.question.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +16,6 @@ import teamB.market.web.item.service.ItemService;
 import teamB.market.web.member.service.MemberService;
 import teamB.market.web.question.form.AddQuestionForm;
 import teamB.market.web.question.form.EditQuestionForm;
-import teamB.market.web.question.form.QuestionList;
 import teamB.market.web.question.service.QuestionService;
 import teamB.market.web.reply.service.ReplyService;
 
@@ -25,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -49,7 +46,6 @@ public class QuestionController {
         String currentTime = current.format(formatter);
 
         // 회원 닉네임 저장
-//        Member loginMember = (Member) httpSession.getAttribute("loginMember");
         String loginEmail = (String) httpSession.getAttribute("loginSession");
         Member loginMember = memberService.findByEmail(loginEmail);
         String nickname = loginMember.getNickname();
@@ -164,7 +160,6 @@ public class QuestionController {
         // question 객체에서 itemId 가져오기
         Question question = questionService.findById(questionId);
         questionService.delete(questionId);
-//        Question question = questionService.findById(questionId);
 
         model.addAttribute("itemId", question.getItemId());
 

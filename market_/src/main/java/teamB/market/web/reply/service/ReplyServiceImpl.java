@@ -12,7 +12,6 @@ import teamB.market.domain.question.mapper.ReplyMapper;
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 
-    //private final replyMapper replyMapper;
 	private final ReplyMapper replyMapper;
 
     @Override

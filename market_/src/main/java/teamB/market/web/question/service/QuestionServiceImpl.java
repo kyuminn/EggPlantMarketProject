@@ -21,11 +21,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> list() {
-        return questionMapper.findAll();
-    }
-
-    @Override
     public Question findById(long id) {
         return questionMapper.findById(id);
     }

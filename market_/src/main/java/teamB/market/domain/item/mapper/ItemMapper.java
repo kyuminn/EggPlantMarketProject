@@ -25,7 +25,6 @@ public interface ItemMapper {
 	@Select("select * from item order by id desc")
     List<Item> findAll();
 	
-	//@Select("select * from item where rownum<=8 and order by id desc")
 	@Select("select * from item where id in (select itemId from shipping where shippingStatus='ONSALE')and rownum<=8 order by id desc")
 	List<Item> findLatestItem();
     

@@ -29,7 +29,6 @@ public class ReplyController {
     public String reply(@RequestParam String content, @PathVariable long questionId, HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession(false);
-        //Member loginMember = (Member) session.getAttribute("loginMember");
         String loginEmail = (String) session.getAttribute("loginSession");
         Member loginMember = memberService.findByEmail(loginEmail);
         Question question = questionService.findById(questionId);
@@ -44,7 +43,6 @@ public class ReplyController {
         replyService.save(reply);
 
         // 문의사항 답변 완료
-        //question.setIsReplied(IsReplied.COMPLETE);
         questionService.updateReplyStatus(questionId,IsReplied.COMPLETE);
 
         // 세션에 저장된 회원정보와 답글 회원정보 비교
@@ -68,7 +66,6 @@ public class ReplyController {
 
         // 해당 문의사항에 답변 리스트가 없는 경우 답변상태를 WAIT로 수정
         if(replyList.isEmpty()){
-            //question.setIsReplied(IsReplied.WAIT);
         	questionService.updateReplyStatus(question.getId(), IsReplied.WAIT);
         }
         return "reply/deleteSuccess";

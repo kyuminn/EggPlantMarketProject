@@ -62,7 +62,7 @@
         </table>
         <input type="submit" class="btn btn-primary btn-lg" value="질문 등록">
 
-        <!-- sellerId 조회를 위해 session에 저장된 에미엘 값 넣어주기 -->
+        <!-- sellerId 조회를 위해 session에 저장된 이메일 값 넣어주기 -->
         <input type="hidden" name="loginSession" value="${loginSession}">
     </form:form>
 </div>

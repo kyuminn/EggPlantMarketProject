@@ -28,11 +28,6 @@ public class MemberServiceImpl implements MemberService {
     public void join(Member member) {
     	memberMapper.save(member);
     }
-
-    @Override
-    public void edit(long id, Member updateParam) {
-    	memberMapper.update(id, updateParam);
-    }
     
 	@Override
 	public Member findByEmail(String email) {
