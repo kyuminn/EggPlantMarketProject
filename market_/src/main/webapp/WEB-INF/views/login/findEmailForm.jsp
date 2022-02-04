@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-4 col-md-offset-4">
-            <h1>이메일 찾기</h1>
+            <h3>이메일 찾기</h3>
             <hr/>
                 <form:form class="form-signin" modelAttribute="findEmailFormData" action="${pageContext.request.contextPath}/login/find/email" method="post">
                 	<form:input path="name" class="form-control" placeholder="이름"/><br>

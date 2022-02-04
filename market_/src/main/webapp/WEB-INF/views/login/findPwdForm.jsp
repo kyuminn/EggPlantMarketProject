@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-4 col-md-offset-4">
-            <h1>비밀번호 찾기</h1>
+            <h3>비밀번호 찾기</h3>
             <hr/>
                 <form:form class="form-signin" modelAttribute="findPwdFormData" action="${pageContext.request.contextPath}/login/find/pwd" method="post">
                 	<form:input path="email" class="form-control" placeholder="이메일"/><br><br>

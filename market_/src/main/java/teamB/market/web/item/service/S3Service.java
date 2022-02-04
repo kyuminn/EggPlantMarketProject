@@ -1,5 +1,6 @@
 package teamB.market.web.item.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +18,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.IOUtils;
 
 @Service
 public class S3Service {
@@ -51,8 +54,14 @@ public class S3Service {
         
         //파일 이름 뒤에 현재 시간 붙여서 중복 방지
         String uploadFileName = fileName+System.currentTimeMillis();
+        
+        // 추가
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        byte[] bytes = IOUtils.toByteArray(file.getInputStream());
+        objectMetadata.setContentLength(bytes.length);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 
-        s3Client.putObject(new PutObjectRequest(uploadBucket, uploadFileName, file.getInputStream(), null)
+        s3Client.putObject(new PutObjectRequest(uploadBucket, uploadFileName, byteArrayInputStream, objectMetadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(uploadBucket, uploadFileName).toString();
     }

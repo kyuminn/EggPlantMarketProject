@@ -17,7 +17,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-4 col-md-offset-4">
-            <h2>비밀번호 찾기</h2>
+            <h3>비밀번호 찾기</h3>
             <hr/>
             <div class="account-wall">
                 <img class="profile-img" src="/images/eggPlant.png">
