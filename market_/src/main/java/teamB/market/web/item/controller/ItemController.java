@@ -189,19 +189,32 @@ public class ItemController {
         item.setPrice(form.getPrice());
         
         // 기존 업로드 된 썸네일 삭제
-        s3Service.delete(itemService.findById(itemId).getFilePath());
+// s3Service.delete(itemService.findById(itemId).getFilePath());
         
         //파일 aws s3 에 수정된 썸네일 업로드
+//        String storedFilePath = null;
+//        try {
+//        	storedFilePath= s3Service.upload(thumbnailImage);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+        
+        // 추가
         String storedFilePath = null;
-        try {
-        	storedFilePath= s3Service.upload(thumbnailImage);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        if (!thumbnailImage.isEmpty()) {
+        	s3Service.delete(itemService.findById(itemId).getFilePath());
+          try {
+          	storedFilePath= s3Service.upload(thumbnailImage);
+  		} catch (IOException e) {
+  			e.printStackTrace();
+  			}
+        }
+        
+        if(thumbnailImage.isEmpty()) {
+        	storedFilePath = item.getFilePath();
+        }
         
         item.setFilePath(storedFilePath);
-        
-
         
         // 성공 로직
         itemService.updateItemDetail(itemId, item);
