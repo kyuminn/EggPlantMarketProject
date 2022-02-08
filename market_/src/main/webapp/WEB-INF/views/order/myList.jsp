@@ -49,7 +49,8 @@
 					        		<td width="15%" class="price"></td>
 					        		<td width="15%"><button class="round-black-btn small-btn" 
 					        			onclick="window.location.href='${pageContext.request.contextPath}/question/add/${item.id}'">상품 문의</button></td>
-					        		<td width="15%"><button class="round-black-btn small-btn">주문 취소</button></td>
+					        		<td width="15%"><button class="round-black-btn small-btn" 
+					        		onclick="window.location.href='${pageContext.request.contextPath}/order/revoke/${item.id }'">주문 취소</button></td>
 					        		<td width="10%" class="text-center"><a href="#" class="trash-icon"><i class="far fa-trash-alt"></i></a></td>
 					        	</tr>
 					        	</c:forEach>
