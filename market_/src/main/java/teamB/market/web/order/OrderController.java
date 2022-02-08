@@ -65,6 +65,17 @@ public class OrderController {
 		
 		return "order/myList";
 	}
+	// 주문 취소
+	@GetMapping("revoke/{id}")
+	public String revokeOrder(@PathVariable("id")Long itemId) {
+		// 주문 취소 시 결제 취소 로직
+		
+		// 주문 취소 시 배송 상태 변경
+		Shipping shipping = shippingMapper.findByItemId(itemId);
+		shippingMapper.updateShippingStatus(shipping.getId(),Status.ONSALE);
+		return "redirect:/order/myList/"+shipping.getMemberId();
+	}
+	
 	
 	// 판매자가 출고완료 클릭했을 때 동작
 	@GetMapping("/release/{id}")
