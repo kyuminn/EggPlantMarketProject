@@ -73,6 +73,7 @@ public class OrderController {
 		// 주문 취소 시 배송 상태 변경
 		Shipping shipping = shippingMapper.findByItemId(itemId);
 		shippingMapper.updateShippingStatus(shipping.getId(),Status.ONSALE);
+		
 		return "redirect:/order/myList/"+shipping.getMemberId();
 	}
 	
